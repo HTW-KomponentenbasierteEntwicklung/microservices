@@ -21,27 +21,40 @@ public class Payment {
 
     @NotNull
     @Getter @Setter
-    private UUID order;
+    private String orderNr;
+    @Getter
+    @Setter
+    private String username;
 
-    private String payer;
+
+
+    @Getter
+    @Setter
+    private String buyer;
 
     @NotNull
+    @Getter
+    @Setter
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
     @NotNull
+    @Getter
+    @Setter
     private PaymentStatus status;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @Getter
+    @Setter
     private PaymentMethod method;
 
     public Payment() {
     }
 
-    public Payment(UUID order, String payer, BigDecimal amount, PaymentStatus status, PaymentMethod method) {
-        this.order = order;
-        this.payer = payer;
+    public Payment(String orderNr, String username, String buyer, BigDecimal amount, PaymentStatus status, PaymentMethod method) {
+        this.orderNr = orderNr;
+        this.username = username;
+        this.buyer = buyer;
         this.amount = amount;
         this.status = status;
         this.method = method;

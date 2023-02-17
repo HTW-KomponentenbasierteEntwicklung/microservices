@@ -2,7 +2,7 @@ package de.htwberlin.paymentService.core.domain.model;
 
 public enum PaymentMethod {
 
-    SCHLAFEN,
-    BABY
+    AUF_RECHNUNG,
+    VORKASSE
 
 }

@@ -1,9 +1,6 @@
 package de.htwberlin.paymentService.port.product.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +14,7 @@ public class RabbitMQConfig {
     @Value("payment_exchange")
     private String exchange;
 
-    @Value("email.payment.confirmation")
+    @Value("email_payment_confirmation")
     private String routingKey;
 
     @Bean
@@ -38,6 +35,7 @@ public class RabbitMQConfig {
                 .to(exchange())
                 .with(routingKey);
     }
+
 
 
 

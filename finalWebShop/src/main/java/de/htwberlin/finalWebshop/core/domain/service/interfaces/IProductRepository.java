@@ -1,4 +1,4 @@
-﻿package de.htwberlin.finalWebshop.core.domain.service.interfaces;
+package de.htwberlin.finalWebshop.core.domain.service.interfaces;
 
 import de.htwberlin.finalWebshop.core.domain.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface IProductRepository extends JpaRepository<Product, UUID> {
     List<Product> findProductsByName(String name);
+
 }

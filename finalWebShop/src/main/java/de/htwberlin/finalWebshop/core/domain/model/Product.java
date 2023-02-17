@@ -3,13 +3,10 @@ package de.htwberlin.finalWebshop.core.domain.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.awt.Color;
-import java.util.List;
 import java.util.UUID;
 
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
 public class Product {
@@ -45,12 +42,12 @@ public class Product {
 
     private boolean isReducedPrice;
 
-    private int count;
+    private int amount;
 
     public Product() {
     }
 
-    public Product(String name, String description, BigDecimal price, BigDecimal oldPrice, String imageLink, Category category, Material material, Color color , String size, int count) {
+    public Product(String name, String description, BigDecimal price, BigDecimal oldPrice, String imageLink, Category category, Material material, Color color , String size, int amount) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -61,10 +58,10 @@ public class Product {
         this.color = color;
         this.size = size;
         this.isReducedPrice = oldPrice != price;
-        this.count = count;
+        this.amount = amount;
     }
 
-    public Product(String name, String description, BigDecimal price, String imageLink, Category category, Material material, Color color , String size, int count) {
+    public Product(String name, String description, BigDecimal price, String imageLink, Category category, Material material, Color color , String size, int amount) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -77,7 +74,7 @@ public class Product {
         this.price = price;
         this.oldPrice = this.price;
         this.isReducedPrice = false;
-        this.count = count;
+        this.amount = amount;
     }
 
     public UUID getId() {
@@ -172,12 +169,12 @@ public class Product {
         this.isReducedPrice = isReducedPrice;
     }
 
-    public int getCount() {
-        return count;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Override

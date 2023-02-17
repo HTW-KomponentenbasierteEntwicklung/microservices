@@ -1,7 +1,7 @@
 package de.htwberlin.paymentService.core.domain.service.interfaces;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
-import de.htwberlin.paymentService.port.product.user.exception.*;
+import de.htwberlin.paymentService.core.domain.service.exception.PaymentNotFoundServicesException;
 import java.util.UUID;
 
 /**
@@ -22,17 +22,18 @@ public interface IPaymentService {
      * @param id payment Id
      * @param payment new Payment Information
      * @return the updated Payment
-     * @throws PaymentNotFoundException when the Payment Id wasn't found
+     * @throws PaymentNotFoundServicesException when the Payment Id wasn't found
      */
-    Payment updateProduct(UUID id, Payment payment) throws PaymentNotFoundException;
+    Payment updateProduct(UUID id, Payment payment) throws PaymentNotFoundServicesException;
 
     /**
      * Finds a single Payment by it's Id.
      * @param id Id in UUID format
      * @return the Payment
-     * @throws PaymentNotFoundException when Payment not found (null)
+     * @throws PaymentNotFoundServicesException when Payment not found (null)
      */
-    Payment getPaymentById(UUID id) throws PaymentNotFoundException;
+    Payment getPaymentById(UUID id) throws PaymentNotFoundServicesException;
 
 
+    Iterable<Payment> getAllPayments();
 }

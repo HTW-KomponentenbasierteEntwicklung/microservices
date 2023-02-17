@@ -2,7 +2,9 @@ package de.htwberlin.finalWebshop.core.domain.model;
 
 public enum Category {
 
-    SCHLAFEN,
-    BABY
+    OCEAN,
+    EARTH,
+    BABY,
+    GIANT
 
 }
