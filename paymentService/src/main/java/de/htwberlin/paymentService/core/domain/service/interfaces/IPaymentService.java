@@ -24,7 +24,7 @@ public interface IPaymentService {
      * @return the updated Payment
      * @throws PaymentNotFoundServicesException when the Payment Id wasn't found
      */
-    Payment updateProduct(UUID id, Payment payment) throws PaymentNotFoundServicesException;
+    Payment updatePayment(UUID id, Payment payment) throws PaymentNotFoundServicesException;
 
     /**
      * Finds a single Payment by it's Id.
@@ -36,4 +36,6 @@ public interface IPaymentService {
 
 
     Iterable<Payment> getAllPayments();
+
+    public Payment setPaymentStatusSuccess(UUID id);
 }

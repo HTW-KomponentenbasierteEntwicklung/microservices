@@ -15,7 +15,7 @@ public class RabbitMQConfig {
     private String paymentQueue;
     @Value("self")
     private String selfQueue;
-    @Value("email")
+    @Value("emailOrderConfirmation")
     private String emailQueue;
     @Value("cart")
     private String cartQueue;

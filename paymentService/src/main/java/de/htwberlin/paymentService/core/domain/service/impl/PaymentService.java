@@ -2,6 +2,7 @@ package de.htwberlin.paymentService.core.domain.service.impl;
 
 import de.htwberlin.paymentService.PaymentServiceApplication;
 import de.htwberlin.paymentService.core.domain.model.Payment;
+import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
 import de.htwberlin.paymentService.core.domain.service.exception.PaymentNotFoundServicesException;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentRepository;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
@@ -28,7 +29,7 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    public Payment updateProduct(UUID id, Payment payment) throws PaymentNotFoundServicesException {
+    public Payment updatePayment(UUID id, Payment payment) throws PaymentNotFoundServicesException {
         Payment existingPayment = paymentRepository.findById(id)
                 .orElseThrow(() -> new PaymentNotFoundServicesException());
         BeanUtils.copyProperties(payment, existingPayment, "id");
@@ -46,6 +47,13 @@ public class PaymentService implements IPaymentService {
     @Override
     public Iterable<Payment> getAllPayments() {
         return paymentRepository.findAll();
+    }
+
+    @Override
+    public Payment setPaymentStatusSuccess(UUID id) {
+        Payment payment = this.getPaymentById(id);
+        payment.setStatus(PaymentStatus.SUCCESS);
+        return this.updatePayment(id, payment);
     }
 
 }

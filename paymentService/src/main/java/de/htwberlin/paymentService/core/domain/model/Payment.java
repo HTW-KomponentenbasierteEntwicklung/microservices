@@ -21,7 +21,7 @@ public class Payment {
 
     @NotNull
     @Getter @Setter
-    private String orderNr;
+    private UUID orderNr;
     @Getter
     @Setter
     private String username;
@@ -51,7 +51,7 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(String orderNr, String username, String buyer, BigDecimal amount, PaymentStatus status, PaymentMethod method) {
+    public Payment(UUID orderNr, String username, String buyer, BigDecimal amount, PaymentStatus status, PaymentMethod method) {
         this.orderNr = orderNr;
         this.username = username;
         this.buyer = buyer;

@@ -9,9 +9,11 @@ import java.util.UUID;
 
 public interface IEmailService {
 
-    Email generatePaymentConfirmEmail(EmailAdress account, BigDecimal amount, UUID orderNr);
+    Email generatePaymentConfirmEmail(EmailAdress adress, BigDecimal amount, UUID orderNr);
 
-
+    Email generateOrderConfirmEmail(EmailAdress adress, BigDecimal amount, UUID orderId);
     EmailAdress getEmailAdressByUsername(String username) throws EmailAdressNotFoundException;
     EmailAdress createEmailAdress(UUID userID, String username, String email);
+
+
 }

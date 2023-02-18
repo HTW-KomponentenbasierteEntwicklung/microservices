@@ -1,11 +1,12 @@
 package de.htwberlin.paymentService.port.product.user.controller;
 
-import de.htwberlin.paymentService.PaymentServiceApplication;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwberlin.paymentService.core.domain.model.Payment;
 import de.htwberlin.paymentService.core.domain.service.exception.PaymentNotFoundServicesException;
-import de.htwberlin.paymentService.core.domain.service.interfaces.IDTOMappingService;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
-import de.htwberlin.paymentService.core.domain.model.dto.PaymentEmailDTO;
+import de.htwberlin.paymentService.port.product.dto.PaymentEmailDTO;
+import de.htwberlin.paymentService.port.product.dtoMapper.DTOMappingService;
 import de.htwberlin.paymentService.port.product.user.exception.PaymentNotFoundException;
 import de.htwberlin.paymentService.port.product.user.producer.PaymentProducer;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class PaymentController {
     @Autowired
     private PaymentProducer paymentProducer;
     @Autowired
-    private IDTOMappingService dtoMappingService;
+    private DTOMappingService dtoMappingService;
 
     @GetMapping("/payments")
     @ResponseStatus(HttpStatus.OK)
@@ -52,20 +53,22 @@ public class PaymentController {
            return payment;
     }
 
-    @PutMapping(path="/payment/{id}")
+    @PutMapping(path="/paymentsuccess/{id}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Payment update (@PathVariable("id") UUID id, @RequestBody Payment payment) throws PaymentNotFoundException {
-        Payment updatedpayment = null;
+    Payment updatePaymentStatusSuccess (@PathVariable("id") UUID id) throws PaymentNotFoundException {
+        Payment payment =paymentService.setPaymentStatusSuccess( id);
+        PaymentEmailDTO paymentEmailDTO = dtoMappingService.convertDataToDTO(payment);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String message = null;
         try {
-            updatedpayment = paymentService.updateProduct(id, payment);
-        }catch(PaymentNotFoundServicesException e){
-            throw new PaymentNotFoundException(id);
+            message = objectMapper.writeValueAsString(paymentEmailDTO);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
-        PaymentEmailDTO paymentEmailDTO = dtoMappingService.convertDataToDTO(updatedpayment);
-        paymentProducer.sendMessage("hallo");
-        log.info(updatedpayment.getUsername());
-        return updatedpayment;
+        paymentProducer.sendMessageToEmailService(message);
+        log.info(payment.getUsername());
+        return payment;
     }
 
 

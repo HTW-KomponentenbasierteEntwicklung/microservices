@@ -1,6 +1,12 @@
 package de.htwberlin.paymentService.port.product.user.consumer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.htwberlin.paymentService.core.domain.model.Payment;
+import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
+import de.htwberlin.paymentService.core.domain.service.impl.PaymentService;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
+import de.htwberlin.paymentService.port.product.dto.OrderDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -17,10 +23,17 @@ public class PaymentConsumer {
     @Autowired
     private IPaymentService paymentService;
 
-    @RabbitListener(queues = {"product"})
-    public void consume(String message){
+    @RabbitListener(queues = {"payment"})
+    public void consumeOrder(String message){
+        ObjectMapper objectMapper = new ObjectMapper();
+        OrderDTO orderDTO = null;
+        try {
+            orderDTO = objectMapper.readValue(message, OrderDTO.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        Payment payment = new Payment(orderDTO.getOrderNr(), orderDTO.getUsername(), null, orderDTO.getTotalAmount(), PaymentStatus.PENDING, null);
+        paymentService.createPayment(payment);
 
-        LOGGER.info(String.format("Received message -> %s", message));
-        paymentService.getPaymentById(UUID.randomUUID()); // Todo: UUID statt 123
     }
 }

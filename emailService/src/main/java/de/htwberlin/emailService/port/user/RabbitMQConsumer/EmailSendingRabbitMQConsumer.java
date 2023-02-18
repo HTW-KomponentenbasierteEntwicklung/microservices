@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwberlin.emailService.EmailServiceApplication;
 import de.htwberlin.emailService.core.model.EmailAdress;
 import de.htwberlin.emailService.core.service.interfaces.IEmailService;
+import de.htwberlin.emailService.port.dto.OrderDTO;
 import de.htwberlin.emailService.port.dto.PaymentEmailDTO;
 import de.htwberlin.emailService.port.user.apiConsumer.EmailSendingAPIConsumer;
+import jakarta.persistence.criteria.Order;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,5 +38,17 @@ public class EmailSendingRabbitMQConsumer {
         }
         EmailAdress emailAdress = emailService.getEmailAdressByUsername(paymentEmailDTO.getUsername());
         emailAPIConsumer.sendPaymentConfirmationEmail(emailAdress, paymentEmailDTO);
+    }
+    @RabbitListener(queues = {"emailOrderConfirmation"})
+    public void consumeOrderReceived(String order){
+        OrderDTO orderDTO = null;
+        try {
+            orderDTO = mapper.readValue(order, OrderDTO.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        EmailAdress emailAdress = emailService.getEmailAdressByUsername(orderDTO.getUsername());
+        emailAPIConsumer.sendOrderConfirmationEmail(emailAdress, orderDTO);
+
     }
 }

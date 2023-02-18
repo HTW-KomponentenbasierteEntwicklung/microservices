@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JpbDataSourceConfig">
-    <data-sources>
-      <data-source id="b6d4ee04-8884-4113-93ea-2c0f02ebf56d" name="finalWebShop" url="jdbc:mysql://localhost:3307/demo" driverClass="com.mysql.cj.jdbc.Driver" />
-    </data-sources>
-  </component>
-</project>

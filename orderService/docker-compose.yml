@@ -4,13 +4,13 @@ services:
   database:
     platform: linux/x86_64
     image: mysql
-    container_name: mysqlPayment
+    container_name: mysqlOrder
     ports:
-      - "3309:3306"
+      - "3308:3306"
     volumes:
       - ./:/app/
     environment:
-      MYSQL_DATABASE: payment
+      MYSQL_DATABASE: order
       MYSQL_USER: user
       MYSQL_PASSWORD: user
       MYSQL_ROOT_PASSWORD: user
@@ -21,14 +21,15 @@ services:
     networks:
       - keycloak-net
 
+
   app:
-    container_name: paymentService
-    command: java -jar target/paymentService-0.0.1-SNAPSHOT.jar
+    container_name: orderService
+    command: java -jar target/orderService-0.0.1-SNAPSHOT.jar
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8084:8080"
+      - "8083:8080"
     depends_on:
       database:
         condition: service_healthy
@@ -38,7 +39,7 @@ services:
     networks:
       - keycloak-net
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlPayment:3306/payment?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlOrder:3306/order?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       - spring_rabbitmq_host=rabbitmq-container
       - spring_rabbitmq_port=5672
 

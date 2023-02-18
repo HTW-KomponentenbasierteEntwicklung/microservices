@@ -29,6 +29,14 @@ public class EmailService implements IEmailService {
     }
 
     @Override
+    public Email generateOrderConfirmEmail(EmailAdress adress, BigDecimal amount, UUID orderId) {
+        String content = "Hello "+adress.getUsername()+", \n"+
+                "we received your order "+orderId+ ".\n"+
+                "You need to pay "+amount+" EUR as fast as you can :)";
+        return new Email(adress.getEmailAdress(), "We received your order!", content);
+    }
+
+    @Override
     public EmailAdress getEmailAdressByUsername(String username) throws EmailAdressNotFoundException{
         List<EmailAdress> emailAdress = emailAdressRepository.findByUsername(username);
         if (emailAdress.isEmpty()){

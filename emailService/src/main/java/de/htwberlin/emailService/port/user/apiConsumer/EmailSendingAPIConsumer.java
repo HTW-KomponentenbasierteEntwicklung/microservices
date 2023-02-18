@@ -8,6 +8,7 @@ import de.htwberlin.emailService.core.model.EmailAdress;
 import de.htwberlin.emailService.core.model.Email;
 
 import de.htwberlin.emailService.core.service.interfaces.IEmailService;
+import de.htwberlin.emailService.port.dto.OrderDTO;
 import de.htwberlin.emailService.port.dto.PaymentEmailDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +19,20 @@ public class EmailSendingAPIConsumer {
     private final String API_KEY = "afd1b6ff706ff589e88a439f9231cbc1-d1a07e51-5806315a";
     private final String BASE_URL_EU = "https://api.mailgun.net/";
     private final String DOMAIN_NAME = "sandbox4049035d035e4b08b6f1c79c57a97079.mailgun.org";
+    private String sender = "WebshopFluffy <"+DOMAIN_NAME+">";
     @Autowired
     private IEmailService emailService;
     public MessageResponse sendPaymentConfirmationEmail(EmailAdress account, PaymentEmailDTO payment) {
         Email email = emailService.generatePaymentConfirmEmail(account, payment.getAmount(), payment.getOrderNr());
 
-        Message message = Message.builder()
-                .from("WebshopSleep <"+DOMAIN_NAME+">")
-                .to(email.getReceiver())
-                .subject(email.getSubject())
-                .text(email.getContent())
-                .build();
+        Message message = messageBuilder(email);
+
+        return mailgunMessagesApi().sendMessage(DOMAIN_NAME, message);
+    }
+    public MessageResponse sendOrderConfirmationEmail(EmailAdress account, OrderDTO order) {
+        Email email = emailService.generateOrderConfirmEmail(account, order.getTotalAmount(), order.getOrderNr());
+
+        Message message = messageBuilder(email);
 
         return mailgunMessagesApi().sendMessage(DOMAIN_NAME, message);
     }
@@ -46,6 +50,15 @@ public class EmailSendingAPIConsumer {
                 .build();
 
         return mailgunMessagesApi().sendMessage(DOMAIN_NAME, message);
+    }
+    private Message messageBuilder(Email email){
+        Message message = Message.builder()
+                .from(sender)
+                .to(email.getReceiver())
+                .subject(email.getSubject())
+                .text(email.getContent())
+                .build();
+        return message;
     }
 
 }

@@ -19,7 +19,7 @@ public class OrderProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(String message){
-        rabbitTemplate.convertAndSend(exchange, "", message);
+    public void sendToAll(String message){
+        rabbitTemplate.convertAndSend(exchange, "payment_routing_key", message);
     }
 }
