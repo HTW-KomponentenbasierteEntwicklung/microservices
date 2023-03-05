@@ -13,7 +13,7 @@ public class PaymentNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(value = PaymentNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String productNotFoundHandler(PaymentNotFoundException ex){
+    String paymentNotFoundHandler(PaymentNotFoundException ex){
         return ex.getMessage();
     }
 

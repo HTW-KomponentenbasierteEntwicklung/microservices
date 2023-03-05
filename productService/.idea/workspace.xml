@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b71582-3161-4097-9047-2ac644a1ecd6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/core/domain/service/exception/IdNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/core/domain/service/exception/PaymentNotFoundServicesException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/core/domain/service/impl/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/core/domain/service/impl/PaymentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/core/domain/service/interfaces/IPaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/core/domain/service/interfaces/IPaymentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/core/domain/service/interfaces/IPaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/core/domain/service/interfaces/IPaymentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/port/product/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/port/product/config/RabbitMQConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/port/product/dtoMapper/DTOMappingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/port/product/dtoMapper/DTOMappingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/port/product/user/consumer/PaymentConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/port/product/user/consumer/PaymentConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/port/product/user/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../paymentService/src/main/java/de/htwberlin/paymentService/port/product/user/controller/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/port/product/user/consumer/ProductConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/port/product/user/consumer/ProductConsumer.java" afterDir="false" />
-    </list>
+    <list default="true" id="e1b71582-3161-4097-9047-2ac644a1ecd6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

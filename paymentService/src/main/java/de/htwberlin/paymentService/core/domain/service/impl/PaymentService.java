@@ -2,7 +2,7 @@ package de.htwberlin.paymentService.core.domain.service.impl;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
 import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
-import de.htwberlin.paymentService.core.domain.service.exception.IdNotFoundException;
+import de.htwberlin.paymentService.core.domain.service.exception.PaymentWithOrderIdNotFoundException;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentRepository;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
 import org.springframework.stereotype.Service;
@@ -24,18 +24,20 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    public Payment updatePaymentStatus(UUID id, PaymentStatus status) throws IdNotFoundException {
-        Payment existingPayment = paymentRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundException());
-        existingPayment.setStatus(status);
-        return paymentRepository.save(existingPayment);
+    public Payment updatePaymentStatus(UUID orderId, PaymentStatus status) throws PaymentWithOrderIdNotFoundException {
+        List<Payment> existingPayment = paymentRepository.findByOrderNr(orderId);
+        if (existingPayment.size() == 0){
+            throw new PaymentWithOrderIdNotFoundException();
+        }
+        existingPayment.get(0).setStatus(status);
+        return paymentRepository.save(existingPayment.get(0));
     }
 
     @Override
-    public Payment getPaymentByOrderId(UUID orderId) throws IdNotFoundException {
+    public Payment getPaymentByOrderId(UUID orderId) throws PaymentWithOrderIdNotFoundException {
         List<Payment> paymentByOrderId = paymentRepository.findByOrderNr(orderId);
         if (paymentByOrderId.size() == 0){
-            throw new IdNotFoundException();
+            throw new PaymentWithOrderIdNotFoundException();
         }else{
             return paymentByOrderId.get(0);
         }

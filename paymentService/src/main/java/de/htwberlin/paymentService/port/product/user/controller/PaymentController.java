@@ -3,7 +3,8 @@ package de.htwberlin.paymentService.port.product.user.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwberlin.paymentService.core.domain.model.Payment;
-import de.htwberlin.paymentService.core.domain.service.exception.IdNotFoundException;
+import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
+import de.htwberlin.paymentService.core.domain.service.exception.PaymentWithOrderIdNotFoundException;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
 import de.htwberlin.paymentService.port.product.dto.PaymentEmailDTO;
 import de.htwberlin.paymentService.port.product.dtoMapper.DTOMappingService;
@@ -20,14 +21,11 @@ import java.util.UUID;
 
 @RestController
 public class PaymentController {
-    private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
 
     @Autowired
     private IPaymentService paymentService;
     @Autowired
     private PaymentProducer paymentProducer;
-    @Autowired
-    private DTOMappingService dtoMappingService;
 
     @PostMapping(path = "/payment")
     @ResponseStatus(HttpStatus.OK)
@@ -37,31 +35,22 @@ public class PaymentController {
 
     @GetMapping("/payment/{orderID}")
     @ResponseStatus(HttpStatus.OK)
-    public Payment getPaymentById(@PathVariable UUID orderID) throws PaymentNotFoundException {
+    public Payment getPaymentByOrderId(@PathVariable UUID orderID) throws PaymentNotFoundException {
         Payment payment = null;
         try {
-            payment = paymentService.getPaymentById(orderID);
-        }catch(IdNotFoundException e){
+            payment = paymentService.getPaymentByOrderId(orderID);
+        }catch(PaymentWithOrderIdNotFoundException e){
             throw new PaymentNotFoundException(orderID);
         }
            return payment;
     }
 
-    @PutMapping(path="/paymentsuccess/{id}")
+    @PutMapping(path="/paymentsuccess/{orderId}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Payment updatePaymentStatusSuccess (@PathVariable("id") UUID id) throws PaymentNotFoundException {
-        Payment payment =paymentService.setPaymentStatusSuccess( id);
-        PaymentEmailDTO paymentEmailDTO = dtoMappingService.convertPaymentToDTO(payment);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String message = null;
-        try {
-            message = objectMapper.writeValueAsString(paymentEmailDTO);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        paymentProducer.sendMessageToEmailService(message);
-        log.info(payment.getUsername());
+    Payment updatePaymentStatusSuccess (@PathVariable("orderid") UUID orderId) throws PaymentNotFoundException {
+        Payment payment =paymentService.updatePaymentStatus(orderId, PaymentStatus.SUCCESS);
+        paymentProducer.sendMessageToEmailService(payment);
         return payment;
     }
 
