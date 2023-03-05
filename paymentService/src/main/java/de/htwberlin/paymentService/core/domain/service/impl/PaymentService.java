@@ -15,7 +15,6 @@ import java.util.*;
 
 @Service
 public class PaymentService implements IPaymentService {
-    private static final Logger log = LoggerFactory.getLogger(PaymentServiceApplication.class);
 
     private final IPaymentRepository paymentRepository;
 
@@ -33,8 +32,6 @@ public class PaymentService implements IPaymentService {
         Payment existingPayment = paymentRepository.findById(id)
                 .orElseThrow(() -> new PaymentNotFoundServicesException());
         BeanUtils.copyProperties(payment, existingPayment, "id");
-        log.info(payment.getAmount().toString());
-        log.info(existingPayment.getAmount().toString());
         return paymentRepository.save(existingPayment);
     }
 

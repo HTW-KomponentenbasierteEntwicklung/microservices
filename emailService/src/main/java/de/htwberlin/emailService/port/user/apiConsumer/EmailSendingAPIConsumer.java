@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailSendingAPIConsumer {
-    private final String API_KEY = "afd1b6ff706ff589e88a439f9231cbc1-d1a07e51-5806315a";
+    private final String API_KEY = "your-api-key";
     private final String BASE_URL_EU = "https://api.mailgun.net/";
-    private final String DOMAIN_NAME = "sandbox4049035d035e4b08b6f1c79c57a97079.mailgun.org";
+    private final String DOMAIN_NAME = "email.mailgun.org";
     private String sender = "WebshopFluffy <"+DOMAIN_NAME+">";
     @Autowired
     private IEmailService emailService;

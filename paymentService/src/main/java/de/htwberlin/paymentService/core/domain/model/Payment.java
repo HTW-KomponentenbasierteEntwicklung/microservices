@@ -18,19 +18,12 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Getter
     private UUID id;
-
     @NotNull
     @Getter @Setter
     private UUID orderNr;
     @Getter
     @Setter
     private String username;
-
-
-
-    @Getter
-    @Setter
-    private String buyer;
 
     @NotNull
     @Getter
@@ -51,10 +44,9 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(UUID orderNr, String username, String buyer, BigDecimal amount, PaymentStatus status, PaymentMethod method) {
+    public Payment(UUID orderNr, String username, BigDecimal amount, PaymentStatus status, PaymentMethod method) {
         this.orderNr = orderNr;
         this.username = username;
-        this.buyer = buyer;
         this.amount = amount;
         this.status = status;
         this.method = method;
