@@ -37,7 +37,7 @@
     "name": "Test Service",
     "endpoints": [
         {
-            "endpoint": "/pd/products",
+            "endpoint": "/products",
             "method": "GET",
 
             "extra_config": {
@@ -52,7 +52,7 @@
             "concurrent_calls": 1,
             "backend": [
                 {
-                    "url_pattern": "/pd/products",
+                    "url_pattern": "/products",
                     "encoding": "json",
                     "sd": "static",
                     "extra_config": {},
@@ -67,45 +67,23 @@
             ]
         },
         {
-            "endpoint": "/mock/bogus-new-api/{path}",
+            "endpoint": "/product/{id}",
             "method": "GET",
-            "extra_config": {
-                "github.com/devopsfaith/krakend-jose/validator": {
-                    "alg": "RS256",
-                    "jwk_url": "http://host.docker.internal:8403/auth/realms/master/protocol/openid-connect/certs",
-                    "issuer": "http://localhost:8403/auth/realms/master",
-                    "disable_jwk_security": true
-                },
-                "github.com/devopsfaith/krakend/proxy": {
-                    "static": {
-                        "data": {
-                            "new_field_a": 123,
-                            "new_field_b": [
-                                "arr1",
-                                "arr2"
-                            ],
-                            "new_field_c": {
-                                "obj": "obj1"
-                            }
-                        },
-                        "strategy": "always"
-                    }
-                }
-            },
+
             "output_encoding": "json",
             "concurrent_calls": 1,
             "backend": [
-                {
-                    "url_pattern": "/not-finished-yet",
-                    "encoding": "json",
-                    "sd": "static",
-                    "extra_config": {},
-                    "host": [
-                        "nothing-here"
-                    ],
-                    "disable_host_sanitize": false
-                }
+        {
+            "url_pattern": "/product/{id}",
+            "encoding": "json",
+            "sd": "static",
+            "extra_config": {},
+            "host": [
+                "http://finalWebshop:8080"
             ]
+
+        }
+    ]
         }
     ]
 }
