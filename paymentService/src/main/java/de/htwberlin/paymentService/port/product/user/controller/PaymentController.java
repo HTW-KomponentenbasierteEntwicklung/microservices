@@ -3,7 +3,7 @@ package de.htwberlin.paymentService.port.product.user.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwberlin.paymentService.core.domain.model.Payment;
-import de.htwberlin.paymentService.core.domain.service.exception.PaymentNotFoundServicesException;
+import de.htwberlin.paymentService.core.domain.service.exception.IdNotFoundException;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
 import de.htwberlin.paymentService.port.product.dto.PaymentEmailDTO;
 import de.htwberlin.paymentService.port.product.dtoMapper.DTOMappingService;
@@ -29,26 +29,20 @@ public class PaymentController {
     @Autowired
     private DTOMappingService dtoMappingService;
 
-    @GetMapping("/payments")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Iterable<Payment> getAllPayments() {
-
-        return paymentService.getAllPayments();
-    }
     @PostMapping(path = "/payment")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody Payment create(@RequestBody Payment payment) {
         return paymentService.createPayment(payment);
     }
 
-    @GetMapping("/payment/{id}")
+    @GetMapping("/payment/{orderID}")
     @ResponseStatus(HttpStatus.OK)
-    public Payment getPaymentById(@PathVariable UUID id) throws PaymentNotFoundException {
+    public Payment getPaymentById(@PathVariable UUID orderID) throws PaymentNotFoundException {
         Payment payment = null;
         try {
-            payment = paymentService.getPaymentById(id);
-        }catch(PaymentNotFoundServicesException e){
-            throw new PaymentNotFoundException(id);
+            payment = paymentService.getPaymentById(orderID);
+        }catch(IdNotFoundException e){
+            throw new PaymentNotFoundException(orderID);
         }
            return payment;
     }
@@ -58,7 +52,7 @@ public class PaymentController {
     public @ResponseBody
     Payment updatePaymentStatusSuccess (@PathVariable("id") UUID id) throws PaymentNotFoundException {
         Payment payment =paymentService.setPaymentStatusSuccess( id);
-        PaymentEmailDTO paymentEmailDTO = dtoMappingService.convertDataToDTO(payment);
+        PaymentEmailDTO paymentEmailDTO = dtoMappingService.convertPaymentToDTO(payment);
         ObjectMapper objectMapper = new ObjectMapper();
         String message = null;
         try {

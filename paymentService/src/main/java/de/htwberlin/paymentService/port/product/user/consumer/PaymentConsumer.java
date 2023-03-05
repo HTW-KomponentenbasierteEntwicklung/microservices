@@ -32,7 +32,7 @@ public class PaymentConsumer {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        Payment payment = new Payment(orderDTO.getOrderNr(), orderDTO.getUsername(), null, orderDTO.getTotalAmount(), PaymentStatus.PENDING, null);
+        Payment payment = new Payment(orderDTO.getOrderNr(), orderDTO.getUsername(), orderDTO.getTotalAmount(), PaymentStatus.PENDING, null);
         paymentService.createPayment(payment);
 
     }

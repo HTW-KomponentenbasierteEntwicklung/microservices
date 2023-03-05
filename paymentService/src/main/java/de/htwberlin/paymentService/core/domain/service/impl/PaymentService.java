@@ -1,14 +1,10 @@
 package de.htwberlin.paymentService.core.domain.service.impl;
 
-import de.htwberlin.paymentService.PaymentServiceApplication;
 import de.htwberlin.paymentService.core.domain.model.Payment;
 import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
-import de.htwberlin.paymentService.core.domain.service.exception.PaymentNotFoundServicesException;
+import de.htwberlin.paymentService.core.domain.service.exception.IdNotFoundException;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentRepository;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,29 +24,25 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    public Payment updatePayment(UUID id, Payment payment) throws PaymentNotFoundServicesException {
+    public Payment updatePaymentStatus(UUID id, PaymentStatus status) throws IdNotFoundException {
         Payment existingPayment = paymentRepository.findById(id)
-                .orElseThrow(() -> new PaymentNotFoundServicesException());
-        BeanUtils.copyProperties(payment, existingPayment, "id");
+                .orElseThrow(() -> new IdNotFoundException());
+        existingPayment.setStatus(status);
         return paymentRepository.save(existingPayment);
     }
 
     @Override
-    public Payment getPaymentById(UUID id) throws PaymentNotFoundServicesException {
-        return paymentRepository.findById(id)
-                .orElseThrow(() -> new PaymentNotFoundServicesException());
+    public Payment getPaymentByOrderId(UUID orderId) throws IdNotFoundException {
+        List<Payment> paymentByOrderId = paymentRepository.findByOrderNr(orderId);
+        if (paymentByOrderId.size() == 0){
+            throw new IdNotFoundException();
+        }else{
+            return paymentByOrderId.get(0);
+        }
+
     }
 
-    @Override
-    public Iterable<Payment> getAllPayments() {
-        return paymentRepository.findAll();
-    }
 
-    @Override
-    public Payment setPaymentStatusSuccess(UUID id) {
-        Payment payment = this.getPaymentById(id);
-        payment.setStatus(PaymentStatus.SUCCESS);
-        return this.updatePayment(id, payment);
-    }
+
 
 }

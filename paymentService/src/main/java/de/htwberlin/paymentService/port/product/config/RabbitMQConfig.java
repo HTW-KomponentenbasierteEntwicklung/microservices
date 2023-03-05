@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("emailPaymentConfirmation")
-    private String queueEmailPaymentConfirmation;
+    @Value("paymentToEmail")
+    private String paymentToEmailQueue;
 
     @Value("payment_exchange")
     private String exchange;
@@ -19,7 +19,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue queue(){
-        return new Queue(queueEmailPaymentConfirmation);
+        return new Queue(paymentToEmailQueue);
     }
 
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DTOMappingService{
-    public PaymentEmailDTO convertDataToDTO(Payment payment) {
+    public PaymentEmailDTO convertPaymentToDTO(Payment payment) {
         PaymentEmailDTO dto = new PaymentEmailDTO();
         dto.setOrderNr(payment.getOrderNr());
         dto.setUsername(payment.getUsername());
