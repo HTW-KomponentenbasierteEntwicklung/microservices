@@ -3,17 +3,17 @@ package de.htwberlin.emailService.core.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.UUID;
 
 @Entity
-public class EmailAdress {
-    public EmailAdress() {
+public class OrderEmail {
+    public OrderEmail() {
     }
 
-    public EmailAdress(UUID userID, String emailAdress, String username) {
-        this.userID = userID;
+
+    public OrderEmail(UUID orderId, String emailAdress, String username) {
+        this.orderId = orderId;
         this.emailAdress = emailAdress;
         this.username = username;
     }
@@ -21,14 +21,14 @@ public class EmailAdress {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID emailAdressID;
-    private UUID userID;
+    private UUID id;
     @Getter
-    @Setter
+    @NotNull
+    private UUID orderId;
+    @Getter
     @NotNull
     private String emailAdress;
     @Getter
-    @Setter
     @NotNull
     private String username;
 

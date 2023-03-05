@@ -1,12 +1,12 @@
 package de.htwberlin.emailService.port.user.apiConsumer;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.mailgun.api.v3.MailgunMessagesApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.message.Message;
 import com.mailgun.model.message.MessageResponse;
-import de.htwberlin.emailService.core.model.EmailAdress;
+import de.htwberlin.emailService.core.model.OrderEmail;
 import de.htwberlin.emailService.core.model.Email;
 
+import de.htwberlin.emailService.core.service.exception.EmailAdressForOrderIdNotFoundException;
 import de.htwberlin.emailService.core.service.interfaces.IEmailService;
 import de.htwberlin.emailService.port.dto.OrderDTO;
 import de.htwberlin.emailService.port.dto.PaymentEmailDTO;
@@ -22,15 +22,21 @@ public class EmailSendingAPIConsumer {
     private String sender = "WebshopFluffy <"+DOMAIN_NAME+">";
     @Autowired
     private IEmailService emailService;
-    public MessageResponse sendPaymentConfirmationEmail(EmailAdress account, PaymentEmailDTO payment) {
-        Email email = emailService.generatePaymentConfirmEmail(account, payment.getAmount(), payment.getOrderNr());
+    public MessageResponse sendPaymentConfirmationEmail(PaymentEmailDTO payment) {
+        Email email = emailService.generatePaymentConfirmEmail(payment.getAmount(), payment.getOrderNr());
 
         Message message = messageBuilder(email);
 
         return mailgunMessagesApi().sendMessage(DOMAIN_NAME, message);
     }
-    public MessageResponse sendOrderConfirmationEmail(EmailAdress account, OrderDTO order) {
-        Email email = emailService.generateOrderConfirmEmail(account, order.getTotalAmount(), order.getOrderNr());
+    public MessageResponse sendOrderConfirmationEmail(OrderDTO order) {
+        OrderEmail orderEmail;
+        try{
+            orderEmail = emailService.getOrderEmailByOrderId(order.getOrderId());
+        }catch (EmailAdressForOrderIdNotFoundException e){
+            throw new RuntimeException(e);
+        }
+        Email email = emailService.generateOrderConfirmEmail(order.getTotalAmount(), orderEmail);
 
         Message message = messageBuilder(email);
 
@@ -40,17 +46,7 @@ public class EmailSendingAPIConsumer {
         return MailgunClient.config(BASE_URL_EU, API_KEY)
                 .createApi(MailgunMessagesApi.class);
     }
-    public MessageResponse sendmail(String payment) {
 
-        Message message = Message.builder()
-                .from("WebshopSleep <mailgun@"+DOMAIN_NAME+">")
-                .to("mylinh.dao@t-online.de")
-                .subject("TestEmail")
-                .text("Just ignore this.")
-                .build();
-
-        return mailgunMessagesApi().sendMessage(DOMAIN_NAME, message);
-    }
     private Message messageBuilder(Email email){
         Message message = Message.builder()
                 .from(sender)

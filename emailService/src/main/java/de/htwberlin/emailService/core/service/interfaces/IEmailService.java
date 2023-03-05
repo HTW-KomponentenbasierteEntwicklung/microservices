@@ -1,19 +1,18 @@
 package de.htwberlin.emailService.core.service.interfaces;
 
-import de.htwberlin.emailService.core.model.EmailAdress;
+import de.htwberlin.emailService.core.model.OrderEmail;
 import de.htwberlin.emailService.core.model.Email;
-import de.htwberlin.emailService.port.user.exception.EmailAdressNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 public interface IEmailService {
 
-    Email generatePaymentConfirmEmail(EmailAdress adress, BigDecimal amount, UUID orderNr);
+    Email generatePaymentConfirmEmail(BigDecimal amount, UUID orderNr);
 
-    Email generateOrderConfirmEmail(EmailAdress adress, BigDecimal amount, UUID orderId);
-    EmailAdress getEmailAdressByUsername(String username) throws EmailAdressNotFoundException;
-    EmailAdress createEmailAdress(UUID userID, String username, String email);
+    Email generateOrderConfirmEmail(BigDecimal amount, OrderEmail orderEmail);
+    OrderEmail createOrderEmail(String username, String email, UUID orderId);
 
+    OrderEmail getOrderEmailByOrderId(UUID orderId);
 
 }
