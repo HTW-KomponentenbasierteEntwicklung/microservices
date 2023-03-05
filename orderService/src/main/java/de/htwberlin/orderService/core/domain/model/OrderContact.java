@@ -33,7 +33,5 @@ public class OrderContact {
     private String city;
     @Getter
     private String email;
-    @Getter
-    private BigDecimal totalAmount = new BigDecimal(0);
 
 }

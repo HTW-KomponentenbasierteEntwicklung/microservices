@@ -8,4 +8,5 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface IOrderContactRepository extends JpaRepository<OrderContact, UUID> {
+    List<OrderContact> findByOrderId(UUID orderId);
 }

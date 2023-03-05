@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.UUID;
 public class Order {
     @Getter
+    UUID orderId;
+    @Getter
     private OrderContact orderContact;
     @Getter
     private List<Item> items;
@@ -21,6 +23,7 @@ public class Order {
     private OrderRegistry orderRegistry;
 
     public Order(OrderContact orderContact, List<Item> items, TotalAmount totalAmount, OrderRegistry orderRegistry) {
+        this.orderId = orderContact.getOrderId();
         this.orderContact = orderContact;
         this.items = items;
         this.totalAmount = totalAmount;

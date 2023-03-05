@@ -23,7 +23,7 @@ public class PaymentConsumer {
     @Autowired
     private IPaymentService paymentService;
 
-    @RabbitListener(queues = {"orderToPayment"})
+    @RabbitListener(queues = {"order.ToPayment"})
     public void consumeOrder(String message){
         ObjectMapper objectMapper = new ObjectMapper();
         OrderDTO orderDTO = null;

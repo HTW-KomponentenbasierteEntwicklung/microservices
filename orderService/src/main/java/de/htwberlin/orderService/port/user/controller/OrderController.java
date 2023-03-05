@@ -1,11 +1,9 @@
 package de.htwberlin.orderService.port.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import de.htwberlin.orderService.core.domain.model.Item;
 import de.htwberlin.orderService.core.domain.model.Order;
 import de.htwberlin.orderService.core.domain.model.OrderRegistry;
-import de.htwberlin.orderService.core.domain.services.exception.OrderNotFoundServicesException;
-import de.htwberlin.orderService.core.domain.services.interfaces.IItemService;
+import de.htwberlin.orderService.core.domain.services.exception.NotFoundByOrderIdException;
 import de.htwberlin.orderService.core.domain.services.interfaces.IOrderService;
 import de.htwberlin.orderService.port.dto.OrderDTO;
 import de.htwberlin.orderService.port.dtoMapper.OrderDTOMapper;
@@ -28,8 +26,6 @@ public class OrderController {
     private IOrderService orderService;
     @Autowired
     private OrderProducer orderProducer;
-    @Autowired
-    private OrderDTOMapper orderDTOMapper;
 
     @PostMapping(path = "/order")
     @ResponseStatus(HttpStatus.OK)
@@ -37,15 +33,8 @@ public class OrderController {
         String username = getusernameFromRequestHeader(authorizationHeader);
 
         Order createdOrder = orderService.createOrder(order,username, new Date());
-        OrderDTO orderDTO= orderDTOMapper.getMappedOrderDTO(createdOrder);
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String message = objectMapper.writeValueAsString(orderDTO);
-            orderProducer.sendToAll(message);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        return orderDTO.getOrderNr();
+        orderProducer.sendToAll(createdOrder);
+        return order.getOrderId();
     }
 
     @GetMapping("/id/{id}")
@@ -53,8 +42,8 @@ public class OrderController {
     public Order getOrderById(@PathVariable UUID id) throws OrderNotFoundException {
         Order order = null;
         try {
-            order = orderService.getOrderbyid(id);
-        }catch (OrderNotFoundServicesException e){
+            order = orderService.getOrderByOrderId(id);
+        }catch (NotFoundByOrderIdException e){
             throw new OrderNotFoundException(id);
         }
         return order;

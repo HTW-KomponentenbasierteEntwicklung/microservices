@@ -1,6 +1,8 @@
 package de.htwberlin.orderService.core.domain.services.impl;
 
+import de.htwberlin.orderService.core.domain.model.Order;
 import de.htwberlin.orderService.core.domain.model.OrderContact;
+import de.htwberlin.orderService.core.domain.services.exception.NotFoundByOrderIdException;
 import de.htwberlin.orderService.core.domain.services.interfaces.IOrderContactRepository;
 import de.htwberlin.orderService.core.domain.services.interfaces.IOrderContactService;
 import org.springframework.stereotype.Service;
@@ -16,18 +18,16 @@ public class OrderContactService implements IOrderContactService{
     }
 
     @Override
-    public OrderContact getOrderContactByOrderId(UUID id) {
-        return null;
+    public OrderContact getOrderContactByOrderId(UUID orderId) throws NotFoundByOrderIdException{
+        List<OrderContact> orderContactList = orderContactRepository.findByOrderId(orderId);
+        if(orderContactList.size() == 0){
+            throw new NotFoundByOrderIdException();
+        }
+        return orderContactList.get(0);
     }
 
     @Override
-    public List<OrderContact> getOrdersByUsername(String username) {
-        return null;
-    }
-
-    @Override
-    public OrderContact createOrderContact(OrderContact orderContact, UUID orderId) {
-        orderContact.setOrderId(orderId);
+    public OrderContact createOrderContact(OrderContact orderContact) {
         return orderContactRepository.save(orderContact);
     }
 }

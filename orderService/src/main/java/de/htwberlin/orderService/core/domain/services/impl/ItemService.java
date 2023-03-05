@@ -17,10 +17,9 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public List<Item> addItemToOrder(UUID orderID, List<Item> items) {
+    public List<Item> addItemToOrder(List<Item> items) {
         List<Item> returnItems = new ArrayList<>();
         for(int i=0; i<items.size(); i++){
-            items.get(i).setOrderID(orderID);
             returnItems.add(itemRepository.save(items.get(i)));
         }
         return returnItems;

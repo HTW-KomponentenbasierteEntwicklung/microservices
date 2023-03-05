@@ -15,8 +15,7 @@ public class TotalAmountService implements ITotalAmountService {
     }
 
     @Override
-    public TotalAmount createTotalAmount(TotalAmount totalAmount, UUID orderId) {
-        totalAmount.setOrderId(orderId);
+    public TotalAmount createTotalAmount(TotalAmount totalAmount) {
         return totalAmountRepository.save(totalAmount);
 
     }

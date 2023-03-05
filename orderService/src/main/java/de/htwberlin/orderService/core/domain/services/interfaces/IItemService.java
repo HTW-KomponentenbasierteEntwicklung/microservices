@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IItemService {
-    public List<Item> addItemToOrder(UUID orderID, List<Item> items);
+    public List<Item> addItemToOrder(List<Item> items);
 
     public List<Item> getItemsForOrderId(UUID id);
 
