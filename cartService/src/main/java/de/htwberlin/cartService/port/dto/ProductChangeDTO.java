@@ -4,8 +4,8 @@ import lombok.Data;
 
 import java.util.UUID;
 @Data
-public class ProductDTO {
+public class ProductChangeDTO {
     UUID id;
-    int amount;
+    int changeAmount;
 
 }

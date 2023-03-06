@@ -10,7 +10,7 @@ public interface IProductService {
 
     Product createProduct(Product product);
 
-    Product updateProduct(UUID id, Product product) throws ProductIDNotFoundException;
+    Product updateProductAmount(UUID productId, int difference) throws ProductIDNotFoundException;
 
     void deleteProduct(UUID id) ;
 

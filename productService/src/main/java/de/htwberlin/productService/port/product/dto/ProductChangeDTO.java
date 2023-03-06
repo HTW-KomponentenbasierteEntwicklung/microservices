@@ -6,6 +6,6 @@ import java.util.UUID;
 
 @Data
 public class ProductChangeDTO {
-    private int difference;
-    private UUID productId;
+    private int changeAmount;
+    private UUID id;
 }

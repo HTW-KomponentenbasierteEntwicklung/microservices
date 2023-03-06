@@ -1,16 +1,16 @@
 package de.htwberlin.cartService.port.dtomapper;
 
 import de.htwberlin.cartService.core.domain.model.Item;
-import de.htwberlin.cartService.port.dto.ProductDTO;
+import de.htwberlin.cartService.port.dto.ProductChangeDTO;
 import org.springframework.stereotype.Service;
 
 @Service
 
 public class ItemToProductDTOMapper {
-    public ProductDTO getProductDTOFromItem(Item item){
-        ProductDTO productDTO = new ProductDTO();
+    public ProductChangeDTO getProductChangeDTO(Item item, int difference){
+        ProductChangeDTO productDTO = new ProductChangeDTO();
         productDTO.setId(item.getProductId());
-        productDTO.setAmount(item.getAmount());
+        productDTO.setChangeAmount(difference);
         return productDTO;
     }
 }

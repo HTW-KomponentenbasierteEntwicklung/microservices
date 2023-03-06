@@ -41,19 +41,6 @@ public class ProductController {
         return product;
     }
 
-    @PutMapping(path="/product/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Product update (@PathVariable("id") UUID id, @RequestBody Product product) throws ProductNotFoundException {
-        Product updatedProduct = null;
-        try{
-            updatedProduct = productService.updateProduct(id, product);
-        }catch (ProductIDNotFoundException e){
-            throw new ProductNotFoundException(id);
-        }
-        return updatedProduct;
-    }
-
-
     @DeleteMapping(path="/product")
     public @ResponseBody void delete (@PathVariable UUID id) {
         productService.deleteProduct(id);

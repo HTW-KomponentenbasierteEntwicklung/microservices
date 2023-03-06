@@ -25,12 +25,12 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product updateProduct(UUID id, Product product) throws ProductIDNotFoundException {
-        Product existingProduct = productRepository.getById(id);
+    public Product updateProductAmount(UUID productId, int difference) throws ProductIDNotFoundException {
+        Product existingProduct = productRepository.getById(productId);
         if (existingProduct == null){
-            throw new ProductIDNotFoundException(id);
+            throw new ProductIDNotFoundException(productId);
         }
-        BeanUtils.copyProperties(product, existingProduct, "id");
+        existingProduct.setAmount(existingProduct.getAmount() + difference);
         return productRepository.save(existingProduct);
     }
 

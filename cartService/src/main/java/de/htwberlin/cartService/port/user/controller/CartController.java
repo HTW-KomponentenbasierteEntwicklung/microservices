@@ -1,11 +1,11 @@
 package de.htwberlin.cartService.port.user.controller;
 
 import de.htwberlin.cartService.core.domain.model.Item;
+import de.htwberlin.cartService.core.domain.services.exception.ItemNotFoundException;
 import de.htwberlin.cartService.core.domain.services.interfaces.ICartService;
 import de.htwberlin.cartService.core.domain.model.Cart;
-import de.htwberlin.cartService.port.dto.ProductDTO;
-import de.htwberlin.cartService.port.dtomapper.ItemToProductDTOMapper;
 import de.htwberlin.cartService.port.producer.CartProducer;
+import de.htwberlin.cartService.port.user.exception.NoSuchItemExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,8 +21,6 @@ public class CartController {
     private ICartService cartService;
     @Autowired
     private CartProducer cartProducer;
-    @Autowired
-    private ItemToProductDTOMapper itemToProductDTOMapper;
 
     @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
@@ -32,15 +30,22 @@ public class CartController {
     }
     @PutMapping("/changeAmount")
     @ResponseStatus(HttpStatus.OK)
-    public Cart changeAmountForItem(@RequestBody Item item, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader){
+    public Cart changeAmountForItem(@RequestBody Item toUpdateItem, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) throws NoSuchItemExistsException {
         String username = getusernameFromRequestHeader(authorizationHeader);
-        cartService.changeAmountOfItem(item);
+        int difference = 0;
+        try {
+            difference = cartService.getAmountDifferenceOfItem(toUpdateItem);
+            cartService.changeAmountOfItemInCart(toUpdateItem);
+        } catch (ItemNotFoundException e) {
+            throw new NoSuchItemExistsException(e);
+        }
+        cartProducer.changeAmountOfProducts(toUpdateItem, difference);
         return cartService.getCartForUsername(username);
     }
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
     public Cart addItemToCart(@RequestBody Item item){
-        cartProducer.changeAmountOfProducts(itemToProductDTOMapper.getProductDTOFromItem(item));
+        cartProducer.changeAmountOfProducts(item, item.getAmount());
 
         return cartService.addItemToCart(item);
     }

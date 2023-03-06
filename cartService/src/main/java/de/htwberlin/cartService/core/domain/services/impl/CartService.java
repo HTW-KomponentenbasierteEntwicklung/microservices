@@ -2,6 +2,7 @@ package de.htwberlin.cartService.core.domain.services.impl;
 
 import de.htwberlin.cartService.core.domain.model.Cart;
 import de.htwberlin.cartService.core.domain.model.Item;
+import de.htwberlin.cartService.core.domain.services.exception.ItemNotFoundException;
 import de.htwberlin.cartService.core.domain.services.interfaces.ICartService;
 import de.htwberlin.cartService.core.domain.services.interfaces.ItemRepository;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,17 @@ public class CartService implements ICartService {
         return itemRepository.findByUsername(username);
     }
     @Override
-    public Cart changeAmountOfItem(Item newItem) {
-        Item currentItem = itemRepository.getById(newItem.getId());
-        if(newItem.getAmount() <= 0){
-            itemRepository.deleteById(newItem.getId());
-        }else{
-            itemRepository.save(newItem);
+    public Cart changeAmountOfItemInCart(Item toUpdateItem) throws ItemNotFoundException {
+        Item currentItem = itemRepository.getById(toUpdateItem.getId());
+        if(currentItem == null){
+            throw new ItemNotFoundException();
         }
-        return this.getCartForUsername(newItem.getUsername());
+        if(toUpdateItem.getAmount() <= 0){
+            itemRepository.deleteById(toUpdateItem.getId());
+        }else{
+            itemRepository.save(toUpdateItem);
+        }
+        return this.getCartForUsername(toUpdateItem.getUsername());
     }
 
     @Override
@@ -52,6 +56,16 @@ public class CartService implements ICartService {
             itemRepository.deleteById(itemList.get(i).getId());
         }
     }
+
+    @Override
+    public int getAmountDifferenceOfItem(Item toUpdateItem) throws ItemNotFoundException {
+        Item currentItem = itemRepository.getById(toUpdateItem.getId());
+        if(currentItem == null){
+            throw new ItemNotFoundException();
+        }
+        return toUpdateItem.getAmount()- currentItem.getAmount();
+    }
+
 
     private BigDecimal getTotalAmountForItemList(List<Item> itemList) {
         BigDecimal totalAmount = new BigDecimal(0);
