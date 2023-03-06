@@ -19,7 +19,7 @@ public class ProductConsumer {
     @Autowired
     private IProductService productService;
 
-    @RabbitListener(queues = {"cart-to-product"})
+    @RabbitListener(queues = {"cartToProduct"})
     public void consumeProductQuantityChange(String productchange){
         ObjectMapper mapper = new ObjectMapper();
         ProductChangeDTO productChangeDTO = null;

@@ -11,24 +11,24 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("payment")
+    @Value("orderToPayment")
     private String paymentQueue;
     @Value("self")
     private String selfQueue;
-    @Value("emailOrderConfirmation")
+    @Value("orderToEmail")
     private String emailQueue;
-    @Value("cart")
+    @Value("orderToCart")
     private String cartQueue;
 
     @Value("order_exchange")
     private String exchange;
 
-    @Value("email_routing_key")
+    @Value("order.ToEmail")
     private String emailRoutingKey;
 
-    @Value("cart_routing_key")
+    @Value("order.ToCart")
     private String cartRoutingKey;
-    @Value("payment_routing_key")
+    @Value("order.ToPayment")
     private String paymentRoutingKey;
     @Value(("self_routing_key"))
     private String selfRoutingKey;

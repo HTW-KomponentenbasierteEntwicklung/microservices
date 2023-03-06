@@ -18,24 +18,11 @@ public class CartService implements ICartService {
     }
 
 
-
-    @Override
-    public void updateProductDataForItems(UUID productId, String productname, String imagelink, BigDecimal price) {
-        List<Item> itemList = itemRepository.findByProductId(productId);
-        for(int i=0; i<itemList.size(); i++){
-            Item item = itemList.get(i);
-            item.setProductname(productname);
-            item.setProductPrice(price);
-            item.setImageLink(imagelink);
-            itemRepository.save(item);
-        }
-    }
-
     private List<Item> getItemsForUsername(String username) {
         return itemRepository.findByUsername(username);
     }
     @Override
-    public Cart changeAmount(Item newItem) {
+    public Cart changeAmountOfItem(Item newItem) {
         Item currentItem = itemRepository.getById(newItem.getId());
         if(newItem.getAmount() <= 0){
             itemRepository.deleteById(newItem.getId());
@@ -56,6 +43,14 @@ public class CartService implements ICartService {
     public Cart addItemToCart(Item item) {
         itemRepository.save( item);
         return getCartForUsername(item.getUsername());
+    }
+
+    @Override
+    public void removeAllItem(String username) {
+        List<Item> itemList = itemRepository.findByUsername(username);
+        for(int i=0; i<itemList.size(); i++){
+            itemRepository.deleteById(itemList.get(i).getId());
+        }
     }
 
     private BigDecimal getTotalAmountForItemList(List<Item> itemList) {

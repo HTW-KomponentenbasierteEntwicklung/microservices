@@ -3,6 +3,9 @@ package de.htwberlin.cartService.port.user.controller;
 import de.htwberlin.cartService.core.domain.model.Item;
 import de.htwberlin.cartService.core.domain.services.interfaces.ICartService;
 import de.htwberlin.cartService.core.domain.model.Cart;
+import de.htwberlin.cartService.port.dto.ProductDTO;
+import de.htwberlin.cartService.port.dtomapper.ItemToProductDTOMapper;
+import de.htwberlin.cartService.port.producer.CartProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +19,10 @@ import java.util.Base64;
 public class CartController {
     @Autowired
     private ICartService cartService;
-
+    @Autowired
+    private CartProducer cartProducer;
+    @Autowired
+    private ItemToProductDTOMapper itemToProductDTOMapper;
 
     @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
@@ -28,12 +34,14 @@ public class CartController {
     @ResponseStatus(HttpStatus.OK)
     public Cart changeAmountForItem(@RequestBody Item item, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader){
         String username = getusernameFromRequestHeader(authorizationHeader);
-        cartService.changeAmount(item);
+        cartService.changeAmountOfItem(item);
         return cartService.getCartForUsername(username);
     }
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
     public Cart addItemToCart(@RequestBody Item item){
+        cartProducer.changeAmountOfProducts(itemToProductDTOMapper.getProductDTOFromItem(item));
+
         return cartService.addItemToCart(item);
     }
     private String getusernameFromRequestHeader(String authorizationHeader) {

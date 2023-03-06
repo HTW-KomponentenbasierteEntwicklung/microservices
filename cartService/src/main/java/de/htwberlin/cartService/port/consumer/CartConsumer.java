@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwberlin.cartService.core.domain.services.interfaces.ICartService;
+import de.htwberlin.cartService.port.dto.OrderDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,20 +12,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
 
 public class CartConsumer {
+    private ObjectMapper mapper = new ObjectMapper();
     @Autowired
-    private ICartService cartService;
+    ICartService cartService;
 
-    @RabbitListener(queues = {"product_cart"})
-    public void consumeProductChange(String product){
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode node = null;
+    @RabbitListener(queues = {"orderToCart"})
+    public void consume(String message){
+        OrderDTO orderDTO = null;
         try {
-            node = objectMapper.readTree(product);
+            orderDTO = mapper.readValue(message, OrderDTO.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        cartService.updateProductDataForItems(UUID.fromString(node.get("id").toString()),
-                                                node.get("productName").toString(),node.get("imgLink").toString(), node.get("price").decimalValue());
+        cartService.removeAllItem(orderDTO.getUsername());
     }
 
 }
