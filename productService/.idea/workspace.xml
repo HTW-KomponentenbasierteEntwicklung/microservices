@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1b71582-3161-4097-9047-2ac644a1ecd6" name="Changes" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/dto/OrderDTO.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/dto/ProductDTO.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/dtomapper/ItemToProductDTOMapper.java" afterDir="false" />
@@ -18,6 +19,14 @@
       <change beforePath="$PROJECT_DIR$/../orderService/src/main/java/de/htwberlin/orderService/port/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../orderService/src/main/java/de/htwberlin/orderService/port/config/RabbitMQConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/port/product/user/consumer/ProductConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/port/product/user/consumer/ProductConsumer.java" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/../paymentService/paymentService.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/CartServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/CartServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/EmailServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/EmailServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/productService.iml" beforeDir="false" afterPath="$PROJECT_DIR$/productService.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+>>>>>>> bd0e76721ad5470325aa4a69094605911557ce48
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,19 +54,12 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
   <component name="ProjectId" id="2LMR8HukQuahaSuZoqtohq8kKj8" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
@@ -69,6 +71,17 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;com.haulmont.jpb.entityDeclaration&quot;
   }
 }</component>
+=======
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+>>>>>>> bd0e76721ad5470325aa4a69094605911557ce48
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="de.htwberlin.productService.core.domain.service.exception" />
@@ -79,7 +92,9 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="finalwebshop" type="Application" factoryName="Application">
+    <configuration name="productServiceApp" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="de.htwberlin.productService.FinalWebshopApplication" />
       <module name="productService" />
       <method v="2">
@@ -125,6 +140,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
