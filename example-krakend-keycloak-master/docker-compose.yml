@@ -1,10 +1,5 @@
 version: '3.9'
 
-
-networks:
-  keycloak-net:
-    name: keycloak-net
-
 volumes:
   keycloak-db:
 
@@ -60,3 +55,7 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+
+networks:
+  keycloak-net:
+    name: keycloak-net

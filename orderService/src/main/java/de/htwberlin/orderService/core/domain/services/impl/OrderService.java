@@ -6,6 +6,7 @@ import de.htwberlin.orderService.core.domain.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -36,12 +37,14 @@ public class OrderService implements IOrderService {
         orderContact.setOrderId(orderId);
 
         List<Item> items = order.getItems();
-        for(int i=0; i<items.size(); i++){
+        BigDecimal total = new BigDecimal(0);
+        for(int i=0; i<items.size(); i++) {
             items.get(i).setOrderID(orderId);
+            total.add(items.get(i).getTotal());
         }
 
-        TotalAmount totalAmount = order.getTotalAmount();
-        totalAmount.setOrderId(orderId);
+        TotalAmount totalAmount = new TotalAmount(orderId, total);
+
 
         orderRegistryRepository.save(orderRegistry);
         orderContactService.createOrderContact(orderContact);

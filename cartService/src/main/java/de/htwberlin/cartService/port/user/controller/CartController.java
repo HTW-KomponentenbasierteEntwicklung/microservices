@@ -5,6 +5,7 @@ import de.htwberlin.cartService.core.domain.services.exception.ItemNotFoundExcep
 import de.htwberlin.cartService.core.domain.services.interfaces.ICartService;
 import de.htwberlin.cartService.core.domain.model.Cart;
 import de.htwberlin.cartService.port.producer.CartProducer;
+import de.htwberlin.cartService.port.user.exception.AmountCannotBeLessThanZeroException;
 import de.htwberlin.cartService.port.user.exception.NoSuchItemExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,14 +25,12 @@ public class CartController {
 
     @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Cart getCart(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader){
-        String username = getusernameFromRequestHeader(authorizationHeader);
+    public @ResponseBody Cart getCart(@RequestParam String username){
         return cartService.getCartForUsername(username);
     }
     @PutMapping("/changeAmount")
     @ResponseStatus(HttpStatus.OK)
-    public Cart changeAmountForItem(@RequestBody Item toUpdateItem, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) throws NoSuchItemExistsException {
-        String username = getusernameFromRequestHeader(authorizationHeader);
+    public Cart changeAmountForItem(@RequestBody Item toUpdateItem, @RequestParam String username) throws NoSuchItemExistsException {
         int difference = 0;
         try {
             difference = cartService.getAmountDifferenceOfItem(toUpdateItem);
@@ -42,21 +41,14 @@ public class CartController {
         cartProducer.changeAmountOfProducts(toUpdateItem, difference);
         return cartService.getCartForUsername(username);
     }
-    @PostMapping("/add")
+    @PostMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
-    public Cart addItemToCart(@RequestBody Item item){
+    public Cart addItemToCart(@RequestBody Item item, @RequestParam String username) throws AmountCannotBeLessThanZeroException {
+        if(item.getAmount() <= 0){
+            throw new AmountCannotBeLessThanZeroException();
+        }
         cartProducer.changeAmountOfProducts(item, item.getAmount());
-
-        return cartService.addItemToCart(item);
+        return cartService.addItemToCart(item, username);
     }
-    private String getusernameFromRequestHeader(String authorizationHeader) {
-        String accessToken = authorizationHeader.split(" ", 2)[1];
-        String payloadEncoded = accessToken.split("\\.")[1];
 
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-        String payloadDecoded = new String(decoder.decode(payloadEncoded));
-        JSONObject payloadJSON = new JSONObject(payloadDecoded);
-        String username = payloadJSON.getString("preferred_username");
-        return username;
-    }
 }

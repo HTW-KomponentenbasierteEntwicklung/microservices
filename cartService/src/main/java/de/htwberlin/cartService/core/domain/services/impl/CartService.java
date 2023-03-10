@@ -39,13 +39,27 @@ public class CartService implements ICartService {
     @Override
     public Cart getCartForUsername(String username) {
         List<Item> items = getItemsForUsername(username);
-        BigDecimal totalAmount = getTotalAmountForItemList(items);
+        BigDecimal totalAmount = this.getTotalAmountForItemList(items);
         return new Cart(items, totalAmount);
     }
 
     @Override
-    public Cart addItemToCart(Item item) {
-        itemRepository.save( item);
+    public Cart addItemToCart(Item item, String username) {
+        List<Item> itemsInCartOfUsername = itemRepository.findByUsername(item.getUsername());
+        Item existingItemWithProductId = null;
+        for(int i=0; i<itemsInCartOfUsername.size(); i++){
+            if(itemsInCartOfUsername.get(i).getProductId() == item.getProductId()){
+                existingItemWithProductId = itemsInCartOfUsername.get(i);
+                break;
+            }
+        }
+        if(existingItemWithProductId == null){
+            item.setUsername(username);
+            itemRepository.save( item);
+        }else {
+            existingItemWithProductId.setAmount(existingItemWithProductId.getAmount() + item.getAmount());
+            itemRepository.save(existingItemWithProductId);
+        }
         return getCartForUsername(item.getUsername());
     }
 
@@ -63,14 +77,17 @@ public class CartService implements ICartService {
         if(currentItem == null){
             throw new ItemNotFoundException();
         }
-        return toUpdateItem.getAmount()- currentItem.getAmount();
+        System.out.println(toUpdateItem.getAmount());
+        System.out.println(currentItem.getAmount());
+        return toUpdateItem.getAmount() - currentItem.getAmount();
     }
 
 
     private BigDecimal getTotalAmountForItemList(List<Item> itemList) {
         BigDecimal totalAmount = new BigDecimal(0);
         for(int i=0; i<itemList.size(); i++){
-            totalAmount.add(itemList.get(i).getProductPrice());
+            BigDecimal amount = new BigDecimal(itemList.get(i).getAmount());
+            totalAmount = totalAmount.add(itemList.get(i).getProductPrice().multiply(amount));
         }
         return totalAmount;
     }

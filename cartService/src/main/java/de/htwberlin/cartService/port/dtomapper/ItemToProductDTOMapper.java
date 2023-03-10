@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 public class ItemToProductDTOMapper {
     public ProductChangeDTO getProductChangeDTO(Item item, int difference){
+        System.out.println(item);
         ProductChangeDTO productDTO = new ProductChangeDTO();
         productDTO.setId(item.getProductId());
         productDTO.setChangeAmount(difference);

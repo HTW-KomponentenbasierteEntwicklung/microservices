@@ -14,10 +14,20 @@ public class TotalAmount {
     private UUID id;
     @Setter
     private UUID orderId;
+
+    public TotalAmount() {
+    }
+
+    public TotalAmount(UUID orderId, BigDecimal itemsTotalAmount) {
+        this.orderId = orderId;
+        this.itemsTotalAmount = itemsTotalAmount;
+        this.totalAmount = itemsTotalAmount.add(this.shipping);
+    }
+
     @Getter @Setter
     private BigDecimal itemsTotalAmount;
     @Getter @Setter
-    private BigDecimal shipping = new BigDecimal(5);
+    private BigDecimal shipping = new BigDecimal(0);
     @Getter @Setter
     private BigDecimal totalAmount;
 

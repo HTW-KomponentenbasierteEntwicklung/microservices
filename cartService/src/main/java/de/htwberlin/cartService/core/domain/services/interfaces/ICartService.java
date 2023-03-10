@@ -7,7 +7,7 @@ import de.htwberlin.cartService.core.domain.services.exception.ItemNotFoundExcep
 public interface ICartService {
     public Cart changeAmountOfItemInCart(Item newItem) throws ItemNotFoundException;
     public Cart getCartForUsername(String username);
-    public Cart addItemToCart(Item item);
+    public Cart addItemToCart(Item item, String username);
     public void removeAllItem(String username);
     int getAmountDifferenceOfItem(Item toUpdateItem) throws ItemNotFoundException;
 }
