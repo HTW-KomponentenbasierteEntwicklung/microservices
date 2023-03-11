@@ -2,8 +2,7 @@ package de.htwberlin.productService.core.domain.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -11,6 +10,7 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Entity
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -20,7 +20,6 @@ public class Product {
 
     @NotNull
     @Size(max = 100)
-    @Getter
     private String name;
 
     @NotNull
@@ -28,7 +27,6 @@ public class Product {
 
     @NotNull
     private BigDecimal price;
-
 
     private String imageLink;
 
@@ -41,6 +39,7 @@ public class Product {
     private Color color;
 
     private String size;
+
     @Setter @Getter
     private int amount;
 
@@ -55,10 +54,6 @@ public class Product {
         this.size = size;
         this.amount = amount;
     }
-
-    public Product() {
-    }
-
 
     @Override
     public String toString() {

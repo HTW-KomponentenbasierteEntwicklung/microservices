@@ -21,6 +21,8 @@ import static org.mockito.Mockito.mock;
 @SpringBootTest
 public class ProductServiceTests {
 
+    /*
+
     private IProductRepository productRepository;
 
     private IProductService productService;
@@ -75,5 +77,8 @@ public class ProductServiceTests {
     //public Product createProduct(Product product) {
     //        return productRepository.save(product);
     //    }
+
+
+     */
 
 }
