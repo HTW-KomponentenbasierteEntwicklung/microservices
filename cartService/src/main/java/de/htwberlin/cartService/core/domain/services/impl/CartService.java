@@ -5,14 +5,19 @@ import de.htwberlin.cartService.core.domain.model.Item;
 import de.htwberlin.cartService.core.domain.services.exception.ItemNotFoundException;
 import de.htwberlin.cartService.core.domain.services.interfaces.ICartService;
 import de.htwberlin.cartService.core.domain.services.interfaces.ItemRepository;
+import de.htwberlin.cartService.port.producer.CartProducer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 @Service
 public class CartService implements ICartService {
     private final ItemRepository itemRepository;
+    private static final Logger log = LoggerFactory.getLogger(CartProducer.class);
 
     public CartService(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
@@ -23,17 +28,18 @@ public class CartService implements ICartService {
         return itemRepository.findByUsername(username);
     }
     @Override
-    public Cart changeAmountOfItemInCart(Item toUpdateItem) throws ItemNotFoundException {
-        Item currentItem = itemRepository.getById(toUpdateItem.getId());
-        if(currentItem == null){
+    public Cart changeAmountOfItemInCart(Item toUpdateItem, String username) throws ItemNotFoundException {
+        Optional<Item> currentItemOptional = itemRepository.findById(toUpdateItem.getId());
+        if(!currentItemOptional.isPresent()){
             throw new ItemNotFoundException();
         }
         if(toUpdateItem.getAmount() <= 0){
             itemRepository.deleteById(toUpdateItem.getId());
         }else{
+            toUpdateItem.setUsername(username);
             itemRepository.save(toUpdateItem);
         }
-        return this.getCartForUsername(toUpdateItem.getUsername());
+        return getCartForUsername(username);
     }
 
     @Override
@@ -45,10 +51,10 @@ public class CartService implements ICartService {
 
     @Override
     public Cart addItemToCart(Item item, String username) {
-        List<Item> itemsInCartOfUsername = itemRepository.findByUsername(item.getUsername());
+        List<Item> itemsInCartOfUsername = itemRepository.findByUsername(username);
         Item existingItemWithProductId = null;
         for(int i=0; i<itemsInCartOfUsername.size(); i++){
-            if(itemsInCartOfUsername.get(i).getProductId() == item.getProductId()){
+            if(itemsInCartOfUsername.get(i).getProductId().equals(item.getProductId())){
                 existingItemWithProductId = itemsInCartOfUsername.get(i);
                 break;
             }
@@ -60,7 +66,7 @@ public class CartService implements ICartService {
             existingItemWithProductId.setAmount(existingItemWithProductId.getAmount() + item.getAmount());
             itemRepository.save(existingItemWithProductId);
         }
-        return getCartForUsername(item.getUsername());
+        return getCartForUsername(username);
     }
 
     @Override
@@ -73,12 +79,11 @@ public class CartService implements ICartService {
 
     @Override
     public int getAmountDifferenceOfItem(Item toUpdateItem) throws ItemNotFoundException {
-        Item currentItem = itemRepository.getById(toUpdateItem.getId());
-        if(currentItem == null){
+        Optional<Item> currentItemOptional = itemRepository.findById(toUpdateItem.getId());
+        if(!currentItemOptional.isPresent()){
             throw new ItemNotFoundException();
         }
-        System.out.println(toUpdateItem.getAmount());
-        System.out.println(currentItem.getAmount());
+        Item currentItem = currentItemOptional.get();
         return toUpdateItem.getAmount() - currentItem.getAmount();
     }
 

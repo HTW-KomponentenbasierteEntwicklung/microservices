@@ -7,6 +7,8 @@ import de.htwberlin.cartService.core.domain.model.Cart;
 import de.htwberlin.cartService.port.producer.CartProducer;
 import de.htwberlin.cartService.port.user.exception.AmountCannotBeLessThanZeroException;
 import de.htwberlin.cartService.port.user.exception.NoSuchItemExistsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,9 +34,10 @@ public class CartController {
     @ResponseStatus(HttpStatus.OK)
     public Cart changeAmountForItem(@RequestBody Item toUpdateItem, @RequestParam String username) throws NoSuchItemExistsException {
         int difference = 0;
+        Cart cart = null;
         try {
             difference = cartService.getAmountDifferenceOfItem(toUpdateItem);
-            cartService.changeAmountOfItemInCart(toUpdateItem);
+            cart = cartService.changeAmountOfItemInCart(toUpdateItem, username);
         } catch (ItemNotFoundException e) {
             throw new NoSuchItemExistsException(e);
         }
@@ -47,7 +50,7 @@ public class CartController {
         if(item.getAmount() <= 0){
             throw new AmountCannotBeLessThanZeroException();
         }
-        cartProducer.changeAmountOfProducts(item, item.getAmount());
+        cartProducer.changeAmountOfProducts(item, (-1) * item.getAmount());
         return cartService.addItemToCart(item, username);
     }
 
