@@ -5,8 +5,13 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
+COPY . .
 
-RUN ./mvnw install
+# RUN ./mvnw install
+# clean up the file
+RUN sed -i 's/\r$//' mvnw
+# run with the SH path
+RUN /bin/sh mvnw dependency:resolve
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 FROM openjdk:17-jdk-slim

@@ -2,7 +2,9 @@ package de.htwberlin.paymentService.core.domain.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.awt.Color;
@@ -12,35 +14,31 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Entity
+@Getter
+@Setter
+//@Table(name="payment")
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Getter
     private UUID id;
+
     @NotNull
-    @Getter @Setter
     private UUID orderNr;
-    @Getter
-    @Setter
+
     private String username;
 
     @NotNull
-    @Getter
-    @Setter
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    @Getter
-    @Setter
     private PaymentStatus status;
 
     @Enumerated(EnumType.STRING)
-    @Getter
-    @Setter
     private PaymentMethod method;
 
+    //https://javatodev.com/microservices-utility-payment-service-implementation/
     public Payment() {
     }
 
