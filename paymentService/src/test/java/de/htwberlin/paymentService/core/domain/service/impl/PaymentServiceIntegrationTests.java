@@ -13,6 +13,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PaymentServiceIntegrationTests {
@@ -40,9 +43,10 @@ public class PaymentServiceIntegrationTests {
     @Before
     public void setUp() {
         Payment payment = new Payment();
+        List<Payment> payments = new LinkedList<>();
 
-        Mockito.when(paymentRepository.findByOrderNr(payment.getOrderNr()))
-                .thenReturn(payment);
+        Mockito.when(paymentRepository.findByOrderId(payment.getOrderId()))
+                .thenReturn(payments);
     }
 
     // write Test cases here

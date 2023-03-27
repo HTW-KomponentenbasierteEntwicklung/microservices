@@ -24,7 +24,7 @@ public class Payment {
     private UUID id;
 
     @NotNull
-    private UUID orderNr;
+    private UUID orderId;
 
     private String username;
 
@@ -42,8 +42,8 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(UUID orderNr, String username, BigDecimal amount, PaymentStatus status, PaymentMethod method) {
-        this.orderNr = orderNr;
+    public Payment(UUID orderId, String username, BigDecimal amount, PaymentStatus status, PaymentMethod method) {
+        this.orderId = orderId;
         this.username = username;
         this.amount = amount;
         this.status = status;

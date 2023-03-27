@@ -2,15 +2,18 @@ package de.htwberlin.paymentService.core.domain.service.interfaces;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
 import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
-import de.htwberlin.paymentService.core.domain.service.exception.PaymentWithOrderIdNotFoundException;
+import de.htwberlin.paymentService.core.domain.service.exception.NoPaymentsWithOrderIdFoundException;
+import de.htwberlin.paymentService.core.domain.service.exception.PaymentIdNotFoundException;
+
+import java.util.List;
 import java.util.UUID;
 
 public interface IPaymentService {
 
     Payment createPayment(Payment payment);
 
-    Payment updatePaymentStatus(UUID orderId, PaymentStatus status) throws PaymentWithOrderIdNotFoundException;
+    Payment updatePaymentStatus(UUID paymentId, PaymentStatus status) throws PaymentIdNotFoundException;
 
-    Payment getPaymentByOrderId(UUID orderId) throws PaymentWithOrderIdNotFoundException;
+    List<Payment> getPaymentsByOrderId(UUID orderId)  throws NoPaymentsWithOrderIdFoundException;
 
 }
