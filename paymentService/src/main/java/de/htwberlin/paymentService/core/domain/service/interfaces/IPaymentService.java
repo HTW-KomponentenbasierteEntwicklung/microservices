@@ -14,6 +14,6 @@ public interface IPaymentService {
 
     Payment updatePaymentStatus(UUID paymentId, PaymentStatus status) throws PaymentIdNotFoundException;
 
-    List<Payment> getPaymentsByOrderId(UUID orderId)  throws NoPaymentsWithOrderIdFoundException;
+    List<Payment> getPaymentsByOrderId(UUID orderId);
 
 }

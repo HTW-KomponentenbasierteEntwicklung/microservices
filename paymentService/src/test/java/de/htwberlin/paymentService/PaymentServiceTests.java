@@ -1,10 +1,11 @@
-package de.htwberlin.paymentService.core.domain.service.impl;
+package de.htwberlin.paymentService;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
+import de.htwberlin.paymentService.core.domain.model.PaymentMethod;
 import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
-import de.htwberlin.paymentService.core.domain.service.exception.NoPaymentsWithOrderIdFoundException;
 import de.htwberlin.paymentService.core.domain.service.exception.PaymentIdAlreadyExistsException;
 import de.htwberlin.paymentService.core.domain.service.exception.PaymentIdNotFoundException;
+import de.htwberlin.paymentService.core.domain.service.impl.PaymentService;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -39,6 +38,7 @@ public class PaymentServiceTests {
         payment.setId(UUID.randomUUID());
         payment.setOrderId(UUID.randomUUID());
         payment.setAmount(BigDecimal.valueOf(100.0));
+        payment.setMethod(PaymentMethod.AUF_RECHNUNG);
 
         when(mockPaymentRepository.existsById(payment.getId())).thenReturn(false);
         when(mockPaymentRepository.save(payment)).thenReturn(payment);
@@ -55,6 +55,7 @@ public class PaymentServiceTests {
         payment.setId(paymentId);
         payment.setOrderId(UUID.randomUUID());
         payment.setAmount(BigDecimal.valueOf(100.0));
+        payment.setMethod(PaymentMethod.AUF_RECHNUNG);
 
         when(mockPaymentRepository.existsById(paymentId)).thenReturn(true);
         assertThrows(PaymentIdAlreadyExistsException.class, () -> paymentService.createPayment(payment));
@@ -160,7 +161,7 @@ public class PaymentServiceTests {
         payment.setAmount(BigDecimal.valueOf(100.0));
 
         when(mockPaymentRepository.findById(paymentId)).thenReturn(Optional.of(payment));
-        when(mockPaymentRepository.save(any())).thenThrow(new Exception());
+        when(mockPaymentRepository.save(any())).thenThrow(new IllegalArgumentException());
 
         assertThrows(Exception.class, () -> paymentService.updatePaymentStatus(paymentId, newPaymentStatus));
     }
@@ -184,7 +185,7 @@ public class PaymentServiceTests {
     }
 
     @Test
-    public void testUpdatePaymentStatus_ReturnsPaymentWithUpdatedStatus() throws PaymentIdNotFoundException {
+    public void updatePaymentStatus_ReturnsPaymentWithUpdatedStatusTest() throws PaymentIdNotFoundException {
         UUID paymentId = UUID.randomUUID();
         PaymentStatus newPaymentStatus = PaymentStatus.PENDING;
         Payment payment = new Payment();
@@ -199,8 +200,26 @@ public class PaymentServiceTests {
 
         assertThat(result.getId()).isEqualTo(paymentId);
         assertThat(result.getUsername()).isEqualTo("testname");
-        assertThat(result.getAmount()).isEqualTo(new BigDecimal(100));
+        assertThat(result.getAmount()).isEqualTo(BigDecimal.valueOf(100.0));
         assertThat(result.getStatus()).isEqualTo(newPaymentStatus);
+    }
+
+
+    @Test
+    void getPaymentsByOrderIdValidOrderTest() {
+        UUID orderId = UUID.randomUUID();
+        UUID paymentId = UUID.randomUUID();
+        Payment payment = new Payment();
+        payment.setOrderId(orderId);
+        payment.setId(paymentId);
+        payment.setAmount(BigDecimal.valueOf(10.0));
+
+        when(mockPaymentRepository.findByOrderId(orderId)).thenReturn(Collections.singletonList(payment));
+
+        List<Payment> result = paymentService.getPaymentsByOrderId(orderId);
+
+        assertEquals(1, result.size());
+        assertEquals(orderId, result.get(0).getOrderId());
     }
 
     @Test
@@ -208,12 +227,16 @@ public class PaymentServiceTests {
         UUID orderId = UUID.randomUUID();
         Payment payment1 = new Payment();
         payment1.setOrderId(orderId);
+        payment1.setId(UUID.randomUUID());
         payment1.setAmount(BigDecimal.valueOf(10.0));
         Payment payment2 = new Payment();
         payment2.setOrderId(orderId);
+        payment2.setId(UUID.randomUUID());
         payment2.setAmount(BigDecimal.valueOf(20.0));
-        mockPaymentRepository.save(payment1);
-        mockPaymentRepository.save(payment2);
+        paymentService.createPayment(payment1);
+        paymentService.createPayment(payment2);
+
+        when(mockPaymentRepository.findByOrderId(orderId)).thenReturn(Arrays.asList(payment1, payment2));
 
         List<Payment> payments = paymentService.getPaymentsByOrderId(orderId);
 
@@ -225,7 +248,10 @@ public class PaymentServiceTests {
     @Test
     void getPaymentsByOrderIdWithInvalidOrderIdTest () {
         UUID orderId = UUID.randomUUID();
-        assertThrows(NoPaymentsWithOrderIdFoundException.class, () -> paymentService.getPaymentsByOrderId(orderId));
+        when(mockPaymentRepository.findByOrderId(orderId)).thenReturn(Arrays.asList());
+        List<Payment> payments = paymentService.getPaymentsByOrderId(orderId);
+        assertEquals(0, payments.size());
+        assertEquals(true, payments.isEmpty());
     }
 
     @Test

@@ -19,7 +19,7 @@ import java.util.*;
 public class PaymentService implements IPaymentService {
 
     @Autowired
-    private final IPaymentRepository paymentRepository;
+    private IPaymentRepository paymentRepository;
 
     @Override
     public Payment createPayment(Payment payment) {
@@ -45,15 +45,12 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    public List<Payment> getPaymentsByOrderId(UUID orderId) throws NoPaymentsWithOrderIdFoundException {
+    public List<Payment> getPaymentsByOrderId(UUID orderId) {
 
         if (orderId == null)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Order ID is invalid.");
 
         List<Payment> payments = paymentRepository.findByOrderId(orderId);
-
-        if (payments.isEmpty())
-            throw new NoPaymentsWithOrderIdFoundException(orderId);
 
         return payments;
     }

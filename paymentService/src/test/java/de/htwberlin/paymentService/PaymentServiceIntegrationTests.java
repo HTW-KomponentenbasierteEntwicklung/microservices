@@ -1,6 +1,7 @@
-package de.htwberlin.paymentService.core.domain.service.impl;
+package de.htwberlin.paymentService;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
+import de.htwberlin.paymentService.core.domain.service.impl.PaymentService;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentRepository;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
 import org.junit.Before;
@@ -16,8 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.LinkedList;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public class PaymentServiceIntegrationTests {
 
     @TestConfiguration

@@ -23,7 +23,7 @@ public class PaymentConsumer {
     @Autowired
     private IPaymentService paymentService;
 
-    @RabbitListener(queues = {"order.ToPayment"})
+    @RabbitListener(queues = {"order.ToPayment"})   //Todo: queue Name kann in applications.properties ausgelagert werden
     public void consumeOrder(String message){
         ObjectMapper objectMapper = new ObjectMapper();
         OrderDTO orderDTO = null;
@@ -32,8 +32,7 @@ public class PaymentConsumer {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        Payment payment = new Payment(orderDTO.getOrderNr(), orderDTO.getUsername(), orderDTO.getTotalAmount(), PaymentStatus.PENDING, null);
+        Payment payment = new Payment(orderDTO.getOrderId(), orderDTO.getUsername(), orderDTO.getTotalAmount(), PaymentStatus.PENDING, null);
         paymentService.createPayment(payment);
-
     }
 }

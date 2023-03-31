@@ -38,7 +38,6 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentMethod method;
 
-    //https://javatodev.com/microservices-utility-payment-service-implementation/
     public Payment() {
     }
 
