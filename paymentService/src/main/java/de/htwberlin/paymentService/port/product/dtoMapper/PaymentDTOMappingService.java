@@ -1,8 +1,7 @@
 package de.htwberlin.paymentService.port.product.dtoMapper;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
-import de.htwberlin.paymentService.port.product.dto.PaymentDTO;
-import org.springframework.beans.BeanUtils;
+import de.htwberlin.paymentService.port.product.dto.*;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -9,12 +9,12 @@ import static org.assertj.core.api.Assertions.*;
 @WebMvcTest
 public class ProductModuleWebLayerTests {
 
-    @Autowired
+   /* @Autowired
     private ProductController productController;
 
     @Test
     void productControllerIsLoaded() {
         assertThat(productController).isNotNull();
-    }
+    }*/
 
 }

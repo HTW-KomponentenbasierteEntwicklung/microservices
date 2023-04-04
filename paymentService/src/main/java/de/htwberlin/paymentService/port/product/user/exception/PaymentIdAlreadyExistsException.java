@@ -1,4 +1,4 @@
-package de.htwberlin.paymentService.core.domain.service.exception;
+package de.htwberlin.paymentService.port.product.user.exception;
 
 import java.util.UUID;
 

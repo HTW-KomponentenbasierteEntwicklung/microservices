@@ -17,13 +17,13 @@ import java.math.BigDecimal;
 @SpringBootApplication
 public class FinalWebshopApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(FinalWebshopApplication.class);
+	/*private static final Logger log = LoggerFactory.getLogger(FinalWebshopApplication.class);*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(FinalWebshopApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner demo(ProductController productController) {
 
 		return args -> {
@@ -32,10 +32,10 @@ public class FinalWebshopApplication {
 			Product testProduct3 = new Product("Whale Fluff", "Warm dude for the winter", new BigDecimal(300), "https://cdn.shopify.com/s/files/1/1180/3390/products/MW-01-1.jpg?v=1676542850", Category.OCEAN, Material.FLUFFY, Color.ROSE, "25cm", 10);
 
 
-			productController.create(testProduct1);
-			productController.create(testProduct2);
-			productController.create(testProduct3);
+			productController.createProduct(testProduct1);
+			productController.createProduct(testProduct2);
+			productController.createProduct(testProduct3);
 
 		};
-	}
+	}*/
 }

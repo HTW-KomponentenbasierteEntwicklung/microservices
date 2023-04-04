@@ -2,9 +2,9 @@ package de.htwberlin.paymentService.core.domain.service.impl;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
 import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
-import de.htwberlin.paymentService.core.domain.service.exception.NoPaymentsWithOrderIdFoundException;
-import de.htwberlin.paymentService.core.domain.service.exception.PaymentIdAlreadyExistsException;
-import de.htwberlin.paymentService.core.domain.service.exception.PaymentIdNotFoundException;
+import de.htwberlin.paymentService.port.product.user.exception.NoPaymentsWithOrderIdFoundException;
+import de.htwberlin.paymentService.port.product.user.exception.PaymentIdAlreadyExistsException;
+import de.htwberlin.paymentService.port.product.user.exception.PaymentIdNotFoundException;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentRepository;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
 import lombok.AllArgsConstructor;
@@ -30,15 +30,17 @@ public class PaymentService implements IPaymentService {
 
     @Override
     public Payment updatePayment(Payment payment) throws PaymentIdNotFoundException{
-        if (payment == null)
-            throw new IllegalArgumentException("Payment is missing or invalid");
-        paymentRepository.findById(payment.getPaymentId())
-                .orElseThrow(() -> new PaymentIdNotFoundException(payment.getPaymentId()));
-        return paymentRepository.save(payment);
+        if (paymentRepository.existsById(payment.getPaymentId())) {
+            return paymentRepository.save(payment);
+        } else {
+            throw new PaymentIdNotFoundException(payment.getPaymentId());
+        }
     }
 
     @Override
-    public void deletePayment(UUID paymentId) {
+    public void deletePayment(UUID paymentId) throws PaymentIdNotFoundException {
+        paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new PaymentIdNotFoundException(paymentId));
         paymentRepository.deleteById(paymentId);
     }
 
@@ -63,6 +65,8 @@ public class PaymentService implements IPaymentService {
 
         List<Payment> payments = paymentRepository.findByOrderId(orderId);
 
+        if (payments.isEmpty())
+            throw new NoPaymentsWithOrderIdFoundException(orderId);
         return payments;
     }
 }

@@ -2,11 +2,8 @@ package de.htwberlin.productService.port.product.user.controller;
 
 import de.htwberlin.productService.core.domain.model.Category;
 import de.htwberlin.productService.core.domain.model.Product;
-import de.htwberlin.productService.port.product.user.exception.ProductIdAlreadyExistsException;
 import de.htwberlin.productService.core.domain.service.interfaces.IProductService;
-import de.htwberlin.productService.port.product.user.exception.ProductIdNotFoundException;
-import de.htwberlin.productService.port.product.user.exception.ProductNotFoundException;
-import de.htwberlin.productService.port.product.user.exception.ProductsNotFoundException;
+import de.htwberlin.productService.port.product.user.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -30,12 +27,6 @@ public class ProductController {
         return productService.createProduct(product);
     }
 
-    @PostMapping(path = "/product")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Product updateProduct(@RequestBody Product product) throws ProductNotFoundException {
-        return productService.updateProduct(product);
-    }
-
     @GetMapping("/product/{id}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody Product getProductById(@PathVariable UUID productId)  throws ProductIdNotFoundException {
@@ -55,7 +46,7 @@ public class ProductController {
 
     @GetMapping("/product/name/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<Product> findProductsByName(@PathVariable String name) throws ProductNotFoundException {
+    public @ResponseBody List<Product> findProductsByName(@PathVariable String name) throws ProductsNotFoundException {
         return productService.findProductsByName(name);
     }
 

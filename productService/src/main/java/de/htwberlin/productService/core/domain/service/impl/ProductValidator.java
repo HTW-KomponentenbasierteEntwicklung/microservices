@@ -8,7 +8,7 @@ public class ProductValidator {
         if (product == null)
             throw new IllegalArgumentException("Product cannot be null.");
 
-        if (product.getId() == null)
+        if (product.getProductId() == null)
             throw new IllegalArgumentException("Product ID cannot be null.");
 
         if (product.getAmount() < 0)

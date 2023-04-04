@@ -3,7 +3,7 @@ package de.htwberlin.paymentService.port.product.user.producer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwberlin.paymentService.core.domain.model.Payment;
-import de.htwberlin.paymentService.port.product.dto.PaymentDTO;
+import de.htwberlin.paymentService.port.product.dto.*;
 import de.htwberlin.paymentService.port.product.dtoMapper.PaymentDTOMappingService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,9 @@ package de.htwberlin.paymentService.unitTests;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
 import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
-import de.htwberlin.paymentService.core.domain.service.exception.NoPaymentsWithOrderIdFoundException;
-import de.htwberlin.paymentService.core.domain.service.exception.PaymentIdNotFoundException;
+import de.htwberlin.paymentService.port.product.user.exception.NoPaymentsWithOrderIdFoundException;
+import de.htwberlin.paymentService.port.product.user.exception.PaymentIdAlreadyExistsException;
+import de.htwberlin.paymentService.port.product.user.exception.PaymentIdNotFoundException;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
 import de.htwberlin.paymentService.port.product.user.controller.PaymentController;
 import de.htwberlin.paymentService.port.product.user.producer.PaymentProducer;
@@ -21,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -45,21 +46,18 @@ public class PaymentControllerTests {
 
         when(paymentService.createPayment(payment)).thenReturn(payment);
 
-        ResponseEntity<Payment> response = paymentController.create(payment);
+        Payment paymentCreated = paymentController.create(payment);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(payment, response.getBody());
+        assertNotNull(paymentCreated);
+        assertEquals(payment.getPaymentId(), paymentCreated.getPaymentId());
+        assertEquals(payment.getAmount(), paymentCreated.getAmount());
     }
 
     @Test
     public void testCreatePaymentWithInvalidRequest() {
         Payment payment = null;
-
         when(paymentService.createPayment(payment)).thenThrow(new IllegalArgumentException("Payment cannot be null."));
-
-        ResponseEntity<Payment> response = paymentController.create(payment);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertThrows(IllegalArgumentException.class, () -> paymentController.create(payment));
     }
 
     @Test
@@ -71,10 +69,9 @@ public class PaymentControllerTests {
 
         when(paymentService.getPaymentsByOrderId(orderId)).thenReturn(payments);
 
-        ResponseEntity<List<Payment>> response = paymentController.getPaymentsByOrderId(orderId);
+        List<Payment> paymentsRespond = paymentController.getPaymentsByOrderId(orderId);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(payments, response.getBody());
+        assertEquals(payments, paymentsRespond);
     }
 
     @Test
@@ -83,9 +80,7 @@ public class PaymentControllerTests {
 
         when(paymentService.getPaymentsByOrderId(orderId)).thenThrow(new IllegalArgumentException("Order ID is invalid."));
 
-        ResponseEntity<List<Payment>> response = paymentController.getPaymentsByOrderId(orderId);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertThrows(IllegalArgumentException.class, () -> paymentController.getPaymentsByOrderId(orderId));
     }
 
     @Test
@@ -94,24 +89,21 @@ public class PaymentControllerTests {
 
         when(paymentService.getPaymentsByOrderId(orderId)).thenThrow(new NoPaymentsWithOrderIdFoundException(orderId));
 
-        ResponseEntity<List<Payment>> response = paymentController.getPaymentsByOrderId(orderId);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertThrows(IllegalArgumentException.class, () -> paymentController.getPaymentsByOrderId(orderId));
     }
 
     @Test
     public void testUpdatePaymentStatus() throws Exception {
         UUID paymentId = UUID.randomUUID();
         Payment payment = new Payment();
-        payment.setId(paymentId);
+        payment.setPaymentId(paymentId);
 
         when(paymentService.updatePaymentStatus(paymentId, PaymentStatus.SUCCESS)).thenReturn(payment);
         doNothing().when(paymentProducer).sendMessageToEmailService(payment);
 
-        ResponseEntity<Payment> response = paymentController.updatePaymentStatus(paymentId, PaymentStatus.SUCCESS); //Todo: anderen Status?
+        Payment response = paymentController.updatePaymentStatus(paymentId, PaymentStatus.PENDING);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(payment, response.getBody());
+        assertEquals(payment.getStatus(), response.getStatus());
         verify(paymentProducer).sendMessageToEmailService(payment);
     }
 
@@ -121,9 +113,7 @@ public class PaymentControllerTests {
 
         when(paymentService.updatePaymentStatus(paymentId, PaymentStatus.SUCCESS)).thenThrow(new IllegalArgumentException("Payment ID is missing or invalid"));
 
-        ResponseEntity<Payment> response = paymentController.updatePaymentStatus(paymentId, PaymentStatus.SUCCESS); //Todo: anderen Status?
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertThrows(IllegalArgumentException.class, () -> paymentController.updatePaymentStatus(paymentId, PaymentStatus.SUCCESS));
     }
 
     @Test
@@ -132,9 +122,7 @@ public class PaymentControllerTests {
 
         when(paymentService.updatePaymentStatus(paymentId, PaymentStatus.SUCCESS)).thenThrow(new PaymentIdNotFoundException(paymentId));
 
-        ResponseEntity<Payment> response = paymentController.updatePaymentStatus(paymentId, PaymentStatus.SUCCESS); //Todo: anderen Status?
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertThrows(PaymentIdNotFoundException.class, () -> paymentController.updatePaymentStatus(paymentId, PaymentStatus.SUCCESS));
     }
 }
 

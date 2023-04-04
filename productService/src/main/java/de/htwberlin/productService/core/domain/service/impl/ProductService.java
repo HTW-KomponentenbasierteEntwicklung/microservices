@@ -2,12 +2,9 @@ package de.htwberlin.productService.core.domain.service.impl;
 
 import de.htwberlin.productService.core.domain.model.Category;
 import de.htwberlin.productService.core.domain.model.Product;
-import de.htwberlin.productService.port.product.user.exception.ProductIdAlreadyExistsException;
-import de.htwberlin.productService.port.product.user.exception.ProductIdNotFoundException;
 import de.htwberlin.productService.core.domain.service.interfaces.IProductRepository;
 import de.htwberlin.productService.core.domain.service.interfaces.IProductService;
-import de.htwberlin.productService.port.product.user.exception.ProductNotFoundException;
-import de.htwberlin.productService.port.product.user.exception.ProductsNotFoundException;
+import de.htwberlin.productService.port.product.user.exception.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,20 +19,7 @@ public class ProductService implements IProductService {
     @Override
     public Product createProduct(Product product) throws ProductIdAlreadyExistsException {
         ProductValidator.validate(product);
-
-        if (productRepository.existsById(product.getProductId()))
-            throw new ProductIdAlreadyExistsException(product.getProductId());
-
         return productRepository.save(product);
-    }
-
-    @Override
-    public Product updateProduct(Product product) throws ProductNotFoundException {
-        if (productRepository.existsById(product.getProductId())) {
-            return productRepository.save(product);
-        } else {
-            throw new ProductNotFoundException(product.getProductId());
-        }
     }
 
     @Override

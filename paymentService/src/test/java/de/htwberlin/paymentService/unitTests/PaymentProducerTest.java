@@ -39,7 +39,7 @@ public class PaymentProducerTest {
         Payment payment = new Payment(UUID.randomUUID(), "user123", BigDecimal.valueOf(10.0), PaymentStatus.PENDING, null);
 
         PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setId(payment.getId());
+        paymentDTO.setPaymentId(payment.getPaymentId());
         paymentDTO.setUsername(payment.getUsername());
         paymentDTO.setAmount(payment.getAmount());
 

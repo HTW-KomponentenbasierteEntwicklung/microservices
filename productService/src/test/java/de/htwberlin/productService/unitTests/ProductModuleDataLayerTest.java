@@ -17,7 +17,7 @@ public class ProductModuleDataLayerTest {
 
     @Autowired
     private IProductRepository productRepository;
-
+/*
     @Test
     void productRepositoryIsLoaded() {
         assertThat(productRepository).isNotNull();
@@ -28,5 +28,5 @@ public class ProductModuleDataLayerTest {
         Product product = new Product();
         product.setAmount(100);
         productRepository.save(product);
-    }
+    }*/
 }

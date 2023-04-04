@@ -44,7 +44,9 @@ services:
       rabbitmq-container:
         condition: service_started
     volumes:
-      - ./:/app/app
+      #- ./:/app/app
+      - ./target/productService-0.0.1-SNAPSHOT.jar:/app/productService-0.0.1-SNAPSHOT.jar
+
 
     networks:
       - keycloak-net
@@ -52,6 +54,7 @@ services:
         - spring_datasource_url=jdbc:mysql://mysqlProducts:3306/demo?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
         - spring_rabbitmq_host=rabbitmq-container
         - spring_rabbitmq_port=5672
+        #- SPRING_PROFILES_ACTIVE=prod
 
 
 networks:

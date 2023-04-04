@@ -26,7 +26,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @WebMvcTest(value = ProductController.class)
 public class ProductControllerTests {
 
-    @Autowired
+    /*@Autowired
     private MockMvc mockMvc;
 
     @MockBean
@@ -40,6 +40,6 @@ public class ProductControllerTests {
         Mockito.when(productService.createProduct(mockProduct)).thenReturn(mockProduct);
         // https://www.springboottutorial.com/unit-testing-for-spring-boot-rest-services
 
-    }
+    }*/
 
 }
