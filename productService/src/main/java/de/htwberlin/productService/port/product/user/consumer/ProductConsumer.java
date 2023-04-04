@@ -28,6 +28,6 @@ public class ProductConsumer {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        productService.updateProductAmount(productChangeDTO.getId(), productChangeDTO.getChangeAmount());
+        productService.updateProductAmount(productChangeDTO.getProductId(), productChangeDTO.getChangeAmount());
     }
 }

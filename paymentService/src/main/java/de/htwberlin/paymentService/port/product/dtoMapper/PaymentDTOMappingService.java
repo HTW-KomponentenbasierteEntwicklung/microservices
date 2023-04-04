@@ -11,7 +11,7 @@ public class PaymentDTOMappingService {
     public PaymentDTO mapPaymentToPaymentDTO(Payment payment) {
 
         PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setId(payment.getId());
+        paymentDTO.setPaymentId(payment.getPaymentId());
         paymentDTO.setOrderId(payment.getOrderId());
         paymentDTO.setAmount(payment.getAmount());
         paymentDTO.setStatus(payment.getStatus());
@@ -23,7 +23,7 @@ public class PaymentDTOMappingService {
     public Payment mapPaymentDTOToPayment(PaymentDTO paymentDTO) {
 
         Payment payment = new Payment();
-        payment.setId(paymentDTO.getId());
+        payment.setPaymentId(paymentDTO.getPaymentId());
         payment.setOrderId(paymentDTO.getOrderId());
         payment.setAmount(paymentDTO.getAmount());
         payment.setStatus(paymentDTO.getStatus());

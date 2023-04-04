@@ -16,27 +16,17 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequiredArgsConstructor
 public class PaymentController {
 
     @Autowired
-    private final IPaymentService paymentService;
+    private IPaymentService paymentService;
 
-    @Autowired
-    private PaymentProducer paymentProducer;
+    private PaymentProducer paymentProducer;    //Todo: auch autowired annotation?
 
     @PostMapping(path = "/payment")
     public ResponseEntity<Payment> create(@RequestBody Payment payment) {
         Payment paymentResponse = paymentService.createPayment(payment);
         return ResponseEntity.ok(paymentResponse);
-        /* meine alte Version
-        try {
-            Payment paymentResponse = paymentService.createPayment(payment);
-            return ResponseEntity.ok(paymentResponse);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
-         */
     }
 
     @GetMapping("/payment/{orderID}")

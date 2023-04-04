@@ -1,5 +1,6 @@
-package de.htwberlin.productService.port.product.user.controller;
+package de.htwberlin.productService.integrationTests;
 
+import de.htwberlin.productService.port.product.user.controller.ProductController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

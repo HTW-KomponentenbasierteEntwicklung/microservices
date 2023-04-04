@@ -2,10 +2,7 @@ package de.htwberlin.paymentService.core.domain.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.awt.Color;
 import java.util.UUID;
@@ -16,12 +13,13 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 //@Table(name="payment")
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID paymentId;
 
     @NotNull
     private UUID orderId;
@@ -37,9 +35,6 @@ public class Payment {
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod method;
-
-    public Payment() {
-    }
 
     public Payment(UUID orderId, String username, BigDecimal amount, PaymentStatus status, PaymentMethod method) {
         this.orderId = orderId;

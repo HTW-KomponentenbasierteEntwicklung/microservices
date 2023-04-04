@@ -1,4 +1,4 @@
-package de.htwberlin.productService.core.domain.service.impl;
+package de.htwberlin.productService.unitTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 

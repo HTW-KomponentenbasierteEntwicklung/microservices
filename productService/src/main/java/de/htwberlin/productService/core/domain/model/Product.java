@@ -10,13 +10,14 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Getter
-    private UUID id;
+    private UUID productId;
 
     @NotNull
     @Size(max = 100)
@@ -40,7 +41,6 @@ public class Product {
 
     private String size;
 
-    @Setter @Getter
     private int amount;
 
     public Product(String name, String description, BigDecimal price, String imageLink, Category category, Material material, Color color, String size, int amount) {
@@ -58,6 +58,6 @@ public class Product {
     @Override
     public String toString() {
         return String.format("Product[id=%s, name=%s, description=%s, price=%s, picture=%s]",
-                id.toString(), name, description, price, imageLink);
+                productId.toString(), name, description, price, imageLink);
     }
 }

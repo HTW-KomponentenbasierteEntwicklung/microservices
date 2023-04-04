@@ -1,4 +1,4 @@
-package de.htwberlin.paymentService;
+package de.htwberlin.paymentService.unitTests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

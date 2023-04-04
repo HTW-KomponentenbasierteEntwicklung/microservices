@@ -1,4 +1,4 @@
-package de.htwberlin.productService.core.domain;
+package de.htwberlin.productService.unitTests;
 
 import de.htwberlin.productService.core.domain.service.impl.ProductService;
 import de.htwberlin.productService.core.domain.service.interfaces.IProductRepository;

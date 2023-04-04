@@ -8,27 +8,38 @@ import de.htwberlin.paymentService.core.domain.service.exception.PaymentIdNotFou
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentRepository;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class PaymentService implements IPaymentService {
 
-    @Autowired
-    private IPaymentRepository paymentRepository;
+    private final IPaymentRepository paymentRepository;
 
     @Override
-    public Payment createPayment(Payment payment) {
+    public Payment createPayment(Payment payment) throws PaymentIdAlreadyExistsException {
         PaymentValidator.validate(payment);
 
-        if (paymentRepository.existsById(payment.getId()))
-            throw new PaymentIdAlreadyExistsException(payment.getId());
+        if (paymentRepository.existsById(payment.getPaymentId()))
+            throw new PaymentIdAlreadyExistsException(payment.getPaymentId());
 
         return paymentRepository.save(payment);
+    }
+
+    @Override
+    public Payment updatePayment(Payment payment) throws PaymentIdNotFoundException{
+        if (payment == null)
+            throw new IllegalArgumentException("Payment is missing or invalid");
+        paymentRepository.findById(payment.getPaymentId())
+                .orElseThrow(() -> new PaymentIdNotFoundException(payment.getPaymentId()));
+        return paymentRepository.save(payment);
+    }
+
+    @Override
+    public void deletePayment(UUID paymentId) {
+        paymentRepository.deleteById(paymentId);
     }
 
     @Override

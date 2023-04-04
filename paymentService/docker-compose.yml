@@ -38,9 +38,29 @@ services:
     networks:
       - keycloak-net
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlPayment:3306/payment?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlPayment:3309/payment?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       - spring_rabbitmq_host=rabbitmq-container
       - spring_rabbitmq_port=5672
+
+#  app-test:
+#        container_name: paymentservice-test
+#        build:
+#          context: .
+#          dockerfile: Dockerfile
+#        ports:
+#          - "8083:8080"
+#        depends_on:
+#          database:
+#            condition: service_healthy
+#        volumes:
+#          - ./:/app/app
+#        networks:
+#          - keycloak-net
+#        environment:
+#          - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlPayment:3306/testPaymentDB?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+#          - spring_rabbitmq_host=rabbitmq-container
+#          - spring_rabbitmq_port=5672
+#          - SPRING_PROFILES_ACTIVE=test
 
 networks:
   keycloak-net:

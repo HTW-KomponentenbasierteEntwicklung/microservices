@@ -1,5 +1,6 @@
-package de.htwberlin.productService.core.domain.model;
+package de.htwberlin.productService.unitTests;
 
+import de.htwberlin.productService.core.domain.model.Product;
 import de.htwberlin.productService.core.domain.service.interfaces.IProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,7 +10,7 @@ public class PaymentValidator {
         if (payment == null)
             throw new IllegalArgumentException("Payment cannot be null.");
 
-        if (payment.getId() == null)
+        if (payment.getPaymentId() == null)
             throw new IllegalArgumentException("Payment ID cannot be null.");
 
         if (payment.getOrderId() == null)

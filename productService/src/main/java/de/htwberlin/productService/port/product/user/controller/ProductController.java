@@ -1,13 +1,12 @@
 package de.htwberlin.productService.port.product.user.controller;
 
-import de.htwberlin.productService.FinalWebshopApplication;
 import de.htwberlin.productService.core.domain.model.Category;
 import de.htwberlin.productService.core.domain.model.Product;
-import de.htwberlin.productService.core.domain.service.exception.ProductIDNotFoundException;
+import de.htwberlin.productService.port.product.user.exception.ProductIdAlreadyExistsException;
 import de.htwberlin.productService.core.domain.service.interfaces.IProductService;
+import de.htwberlin.productService.port.product.user.exception.ProductIdNotFoundException;
 import de.htwberlin.productService.port.product.user.exception.ProductNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.htwberlin.productService.port.product.user.exception.ProductsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -18,53 +17,57 @@ import java.util.UUID;
 
 @RestController
 public class ProductController {
-    private static final Logger log = LoggerFactory.getLogger(FinalWebshopApplication.class);
+    //private static final Logger log = LoggerFactory.getLogger(FinalWebshopApplication.class);   //Todo: Warum hier?
 
     @Autowired
     private IProductService productService;
 
+    //Todo: ProductConsumer erstellen und bei den update Methoden einfügen (Siehe PaymentController in Paymenr Microservice)
+
     @PostMapping(path = "/product")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Product create(@RequestBody Product product) {
+    public @ResponseBody Product createProduct(@RequestBody Product product) throws ProductIdAlreadyExistsException {
         return productService.createProduct(product);
+    }
+
+    @PostMapping(path = "/product")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody Product updateProduct(@RequestBody Product product) throws ProductNotFoundException {
+        return productService.updateProduct(product);
     }
 
     @GetMapping("/product/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Product getProductById(@PathVariable UUID id) throws ProductNotFoundException {
-        Product product = null;
-        try {
-            product = productService.getProductById(id);
-        }catch (ProductNotFoundException e){
-            throw new ProductNotFoundException(id);
-        }
-        return product;
+    public @ResponseBody Product getProductById(@PathVariable UUID productId)  throws ProductIdNotFoundException {
+        return productService.getProductById(productId);
     }
 
     @DeleteMapping(path="/product")
-    public @ResponseBody void delete (@PathVariable UUID id) {
-        productService.deleteProduct(id);
+    public void deleteProduct (@RequestBody UUID productId)  throws ProductIdNotFoundException {
+        productService.deleteProduct(productId);
     }
 
     @GetMapping("/products")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Iterable<Product> getAllProducts() {
-
+    public @ResponseBody List<Product> getAllProducts() throws ProductsNotFoundException {
         return productService.getAllProducts();
     }
+
     @GetMapping("/product/name/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    List<Product> findProductsByName(@PathVariable String name) {
+    public @ResponseBody List<Product> findProductsByName(@PathVariable String name) throws ProductNotFoundException {
         return productService.findProductsByName(name);
     }
 
     @GetMapping("/category/{category}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    List<Product> findProductsByCategory(@PathVariable Category category) {
+    public @ResponseBody List<Product> findProductsByCategory(@PathVariable Category category) throws ProductNotFoundException {
         return productService.findProductsByCategory(category);
     }
 
-
+    @GetMapping("/products/{productId}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody Product updateProductAmount(@PathVariable UUID productId, int difference) throws ProductIdNotFoundException {
+        return productService.updateProductAmount(productId, difference);
+    }
 }

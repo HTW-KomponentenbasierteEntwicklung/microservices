@@ -1,4 +1,4 @@
-package de.htwberlin.paymentService;
+package de.htwberlin.paymentService.unitTests;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
 import de.htwberlin.paymentService.core.domain.model.PaymentMethod;

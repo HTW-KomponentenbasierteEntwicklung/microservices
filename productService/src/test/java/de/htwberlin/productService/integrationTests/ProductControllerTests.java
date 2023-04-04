@@ -1,9 +1,10 @@
-package de.htwberlin.productService.port.product.user.controller;
+package de.htwberlin.productService.integrationTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.htwberlin.productService.core.domain.model.Product;
 import de.htwberlin.productService.core.domain.service.impl.ProductService;
+import de.htwberlin.productService.port.product.user.controller.ProductController;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 public class PaymentDTO {
-    private UUID id;
+    private UUID paymentId;
     private String username;
     private BigDecimal amount;
     private UUID orderId;
