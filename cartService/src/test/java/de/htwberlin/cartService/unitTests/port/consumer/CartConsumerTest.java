@@ -7,22 +7,22 @@ import de.htwberlin.cartService.core.domain.model.Item;
 import de.htwberlin.cartService.core.domain.services.interfaces.ICartService;
 import de.htwberlin.cartService.port.consumer.CartConsumer;
 import de.htwberlin.cartService.port.dto.OrderDTO;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CartConsumerTest {
 
     @Mock
@@ -46,24 +46,24 @@ public class CartConsumerTest {
         verify(cartService).removeAllItem(username);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testConsumeInvalidMessageFormat() throws JsonProcessingException {
         cartConsumer = new CartConsumer();
         cartConsumer.setCartService(cartService);
 
         String invalidMessage = "not a valid message";
 
-        cartConsumer.consume(invalidMessage);
+        assertThrows(RuntimeException.class, () -> cartConsumer.consume(invalidMessage));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testConsumeNullMessage() throws JsonProcessingException {
         cartConsumer = new CartConsumer();
         cartConsumer.setCartService(cartService);
 
         String nullMessage = null;
 
-        cartConsumer.consume(nullMessage);
+        assertThrows(RuntimeException.class, () -> cartConsumer.consume(nullMessage));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class CartConsumerTest {
         verify(cartService).removeAllItem(emptyUsername);
     }
 
-    @Test
+    @Test // Todo: Nachdem Service klasse getestet ist
     public void testConsumeValidFullCart() throws JsonProcessingException {
         cartConsumer = new CartConsumer();
         cartConsumer.setCartService(cartService);
@@ -105,64 +105,24 @@ public class CartConsumerTest {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setUsername(username);
 
-
         Item item1 = new Item();
         item1.setProductname("Knut");
 
-        Item item2 = new Item();
-        item1.setProductname("Peggy");
-
-        List<Item> cartItems = new ArrayList<>();
-        cartItems.add(item1);
-        cartItems.add(item2);
+        List<Item> items = new ArrayList<>();
+        items.add(item1);
 
         orderDTO.setUsername(username);
         String message = new ObjectMapper().writeValueAsString(orderDTO);
+        Cart cart = new Cart(items, BigDecimal.valueOf(100.0));
 
-        // add items to the cart
-        for (Item item : cartItems) {
-            cartService.addItemToCart(item, username);
-        }
+        Mockito.when(cartService.addItemToCart(item1, username)).thenReturn(cart);
+        Mockito.when(cartService.getCartForUsername(username)).thenReturn(cart);
 
-        // verify that the cart is not empty before consuming the message
-        Cart cart = cartService.getCartForUsername(username);
-        assertFalse(cart.getItems() == null);
+        assertFalse(cart.getItems().isEmpty());
 
-        // consume the message
         cartConsumer.consume(message);
 
-        // verify that the cart is now empty
         cart = cartService.getCartForUsername(username);
         assertTrue(cart.getItems() == null);
     }
-
-
-
-    /*@Test
-    public void testConsumeWithFullCart () throws JsonProcessingException {
-        Item item1 = new Item();
-        item1.setProductname("Knut");
-
-        Item item2 = new Item();
-        item1.setProductname("Peggy");
-        String username = "alfred";
-        cartService.addItemToCart(item1, username);
-        cartService.addItemToCart(item2, username);
-
-        // Order kommt rein
-        OrderDTO orderDTO = new OrderDTO();
-        UUID orderId = UUID.randomUUID();
-        orderDTO.setOrderId(orderId);
-        orderDTO.setUsername(username);
-        orderDTO.setTotalAmount(BigDecimal.valueOf(100.0));
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String message = objectMapper.writeValueAsString(orderDTO);
-        cartConsumer.consume(message);
-
-        // lösche alle Items aus Cart wo bei Cart und User der gleiche Username ist
-        List<Item> items = new LinkedList<>();
-        Cart cartExpected = new Cart(items, BigDecimal.ZERO);
-        assertEquals(cartExpected, cartService.getCartForUsername(username));
-    }*/
 }

@@ -8,11 +8,12 @@ import de.htwberlin.paymentService.port.product.user.exception.PaymentIdNotFound
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
 import de.htwberlin.paymentService.port.product.user.controller.PaymentController;
 import de.htwberlin.paymentService.port.product.user.producer.PaymentProducer;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PaymentControllerTests {
 
     @Mock

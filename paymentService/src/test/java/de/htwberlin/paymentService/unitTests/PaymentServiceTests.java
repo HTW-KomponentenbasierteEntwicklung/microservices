@@ -7,10 +7,11 @@ import de.htwberlin.paymentService.port.product.user.exception.*;
 import de.htwberlin.paymentService.core.domain.service.impl.PaymentService;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PaymentServiceTests {
 
     @Mock

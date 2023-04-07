@@ -14,6 +14,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Getter
+    @Setter
     UUID id;
     @Getter @Setter
     String username;

@@ -9,9 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.UUID;
 
 public class CartConsumer {
     private ObjectMapper mapper = new ObjectMapper();

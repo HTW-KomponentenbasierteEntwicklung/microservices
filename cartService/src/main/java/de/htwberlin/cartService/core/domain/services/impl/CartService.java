@@ -6,35 +6,40 @@ import de.htwberlin.cartService.core.domain.services.exception.ItemNotFoundExcep
 import de.htwberlin.cartService.core.domain.services.interfaces.ICartService;
 import de.htwberlin.cartService.core.domain.services.interfaces.ItemRepository;
 import de.htwberlin.cartService.port.producer.CartProducer;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 @Service
+@AllArgsConstructor
 public class CartService implements ICartService {
+
     private final ItemRepository itemRepository;
-    private static final Logger log = LoggerFactory.getLogger(CartProducer.class);
 
-    public CartService(ItemRepository itemRepository) {
-        this.itemRepository = itemRepository;
-    }
-
+    //private static final Logger log = LoggerFactory.getLogger(CartProducer.class);
 
     private List<Item> getItemsForUsername(String username) {
+
         return itemRepository.findByUsername(username);
     }
+
     @Override
     public Cart changeAmountOfItemInCart(Item toUpdateItem, String username) throws ItemNotFoundException {
-        Optional<Item> currentItemOptional = itemRepository.findById(toUpdateItem.getId());
-        if(!currentItemOptional.isPresent()){
-            throw new ItemNotFoundException();
-        }
+        if (toUpdateItem == null)
+            throw new IllegalArgumentException("Item to change the amount is missing or invalid.");
+
+        itemRepository.findById(toUpdateItem.getId())
+                .orElseThrow(() -> new NoSuchElementException());
+
         if(toUpdateItem.getAmount() <= 0){
-            itemRepository.deleteById(toUpdateItem.getId());
+            itemRepository.deleteById(toUpdateItem.getId());    // Todo: Warum direkt delete?
         }else{
             toUpdateItem.setUsername(username);
             itemRepository.save(toUpdateItem);
@@ -52,29 +57,36 @@ public class CartService implements ICartService {
     @Override
     public Cart addItemToCart(Item item, String username) {
         List<Item> itemsInCartOfUsername = itemRepository.findByUsername(username);
-        Item existingItemWithProductId = null;
+        /*Item existingItemWithProductId = null;
         for(int i=0; i<itemsInCartOfUsername.size(); i++){
             if(itemsInCartOfUsername.get(i).getProductId().equals(item.getProductId())){
                 existingItemWithProductId = itemsInCartOfUsername.get(i);
                 break;
             }
-        }
-        if(existingItemWithProductId == null){
+        }*/
+        Item existingItemWithProductId = itemsInCartOfUsername.stream()
+                .filter(i -> i.getProductId().equals(item.getProductId()))
+                .findFirst()
+                .orElse(null);
+        if (existingItemWithProductId == null) {
             item.setUsername(username);
-            itemRepository.save( item);
-        }else {
+            itemRepository.save(item);
+        } else {
             existingItemWithProductId.setAmount(existingItemWithProductId.getAmount() + item.getAmount());
             itemRepository.save(existingItemWithProductId);
         }
         return getCartForUsername(username);
     }
 
+
     @Override
     public void removeAllItem(String username) {
         List<Item> itemList = itemRepository.findByUsername(username);
-        for(int i=0; i<itemList.size(); i++){
+        /*for(int i=0; i<itemList.size(); i++){
             itemRepository.deleteById(itemList.get(i).getId());
-        }
+        }*/
+        itemRepository.deleteAll(itemList); //Todo: Checken ob im Repository Interface geschrieben werden muss
+        // Todo: im Controller und Advice handler IllegalArgumentException handling implementieren
     }
 
     @Override
@@ -87,13 +99,17 @@ public class CartService implements ICartService {
         return toUpdateItem.getAmount() - currentItem.getAmount();
     }
 
-
     private BigDecimal getTotalAmountForItemList(List<Item> itemList) {
-        BigDecimal totalAmount = new BigDecimal(0);
+        /*BigDecimal totalAmount = new BigDecimal(0);
         for(int i=0; i<itemList.size(); i++){
             BigDecimal amount = new BigDecimal(itemList.get(i).getAmount());
             totalAmount = totalAmount.add(itemList.get(i).getProductPrice().multiply(amount));
         }
-        return totalAmount;
+        return totalAmount;*/
+
+        return itemList.stream()
+                .map(item -> item.getProductPrice().multiply(BigDecimal.valueOf(item.getAmount())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
 }

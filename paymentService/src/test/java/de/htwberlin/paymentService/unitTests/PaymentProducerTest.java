@@ -7,22 +7,24 @@ import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
 import de.htwberlin.paymentService.port.product.dto.PaymentDTO;
 import de.htwberlin.paymentService.port.product.dtoMapper.PaymentDTOMappingService;
 import de.htwberlin.paymentService.port.product.user.producer.PaymentProducer;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PaymentProducerTest {
     @Mock
     private PaymentDTOMappingService paymentDTOMappingService;
@@ -66,17 +68,18 @@ public class PaymentProducerTest {
         verify(rabbitTemplate, times(1)).convertAndSend(anyString(), anyString(), anyString());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSendMessageToEmailServiceWithNullPayment() {
-        paymentProducer.sendMessageToEmailService(null);
+
+        assertThrows(NullPointerException.class, () -> paymentProducer.sendMessageToEmailService(null));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testSendMessageToEmailServiceWithInvalidPayment() {
         Payment payment = new Payment();
         payment.setOrderId(UUID.randomUUID());
 
-        paymentProducer.sendMessageToEmailService(payment);
+        assertThrows(RuntimeException.class, () -> paymentProducer.sendMessageToEmailService(payment));
     }
 
 }
