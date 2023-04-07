@@ -7,7 +7,7 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
-public class RabbitMQConfig {   //Todo: ggf. Klasse komplett löschen und cart Service zuerst starten?
+public class RabbitMQConfig {
 
     @Value("cartToProduct")
     private String cartToProductQueue;

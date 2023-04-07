@@ -40,8 +40,7 @@ COPY . .
 
 RUN sed -i 's/\r$//' mvnw
 RUN /bin/sh mvnw dependency:resolve
-#gg. mit: -DskipTests
-RUN ./mvnw install
+RUN ./mvnw install -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 FROM openjdk:17-jdk-slim

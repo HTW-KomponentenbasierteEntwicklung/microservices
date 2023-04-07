@@ -34,11 +34,10 @@ services:
         condition: service_healthy
     volumes:
       - ./:/app/app
-
     networks:
       - keycloak-net
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlPayment:3309/payment?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlPayment:3306/payment?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       - spring_rabbitmq_host=rabbitmq-container
       - spring_rabbitmq_port=5672
 
