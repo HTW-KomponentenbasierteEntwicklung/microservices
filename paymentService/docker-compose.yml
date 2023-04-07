@@ -47,7 +47,7 @@ services:
 #          context: .
 #          dockerfile: Dockerfile
 #        ports:
-#          - "8083:8080"
+#          - "8074:8080"
 #        depends_on:
 #          database:
 #            condition: service_healthy
@@ -55,7 +55,7 @@ services:
 #          - ./:/app/app
 #        networks:
 #          - keycloak-net
-#        environment:
+#        environment: # Todo: create database testPayment
 #          - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlPayment:3306/testPaymentDB?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
 #          - spring_rabbitmq_host=rabbitmq-container
 #          - spring_rabbitmq_port=5672

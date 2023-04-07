@@ -44,10 +44,8 @@ services:
       rabbitmq-container:
         condition: service_started
     volumes:
-      #- ./:/app/app
-      - ./target/productService-0.0.1-SNAPSHOT.jar:/app/productService-0.0.1-SNAPSHOT.jar
-
-
+      - ./:/app/app
+      #- ./target/productService-0.0.1-SNAPSHOT.jar:/app/productService-0.0.1-SNAPSHOT.jar
     networks:
       - keycloak-net
     environment:
