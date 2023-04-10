@@ -113,35 +113,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.6.4</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-rabbit</artifactId>
 			<version>3.0.0</version>
-		</dependency>
-
-		<!--Diese sind nicht in den anderen Services:-->
-
-        <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-
-		<dependency>
-			<groupId>com.mailgun</groupId>
-			<artifactId>mailgun-java</artifactId>
-			<version>1.0.7</version>
 		</dependency>
 
 		<dependency>
@@ -151,10 +125,36 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!--Diese sind nicht in den anderen Services:-->
+
+        <!--<dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>-->
+
+        <!--<dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>3.0.1</version>
+        </dependency>-->
+
+		<dependency>
+			<groupId>com.mailgun</groupId>
+			<artifactId>mailgun-java</artifactId>
+			<version>1.0.7</version>
+		</dependency>
+
+		<!--<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.13.3</version>
-		</dependency>
+		</dependency>-->
 
 	</dependencies>
 
@@ -165,6 +165,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
 		</plugins>
 	</build>
 

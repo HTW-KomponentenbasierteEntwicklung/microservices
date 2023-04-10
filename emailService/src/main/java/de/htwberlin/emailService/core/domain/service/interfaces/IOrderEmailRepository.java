@@ -1,6 +1,6 @@
-package de.htwberlin.emailService.core.service.interfaces;
+package de.htwberlin.emailService.core.domain.service.interfaces;
 
-import de.htwberlin.emailService.core.model.OrderEmail;
+import de.htwberlin.emailService.core.domain.model.OrderEmail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package de.htwberlin.emailService.core.model;
+package de.htwberlin.emailService.core.domain.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

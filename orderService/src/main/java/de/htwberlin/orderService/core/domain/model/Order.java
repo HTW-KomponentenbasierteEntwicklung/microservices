@@ -5,11 +5,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+
+@Data
 public class Order {
     @Getter
     UUID orderId;

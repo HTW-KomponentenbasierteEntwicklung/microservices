@@ -2,8 +2,8 @@ package de.htwberlin.emailService.port.user.RabbitMQConsumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.htwberlin.emailService.core.model.OrderEmail;
-import de.htwberlin.emailService.core.service.interfaces.IEmailService;
+import de.htwberlin.emailService.core.domain.model.OrderEmail;
+import de.htwberlin.emailService.core.domain.service.interfaces.IEmailService;
 import de.htwberlin.emailService.port.dto.OrderDTO;
 import de.htwberlin.emailService.port.dto.PaymentEmailDTO;
 import de.htwberlin.emailService.port.user.apiConsumer.EmailSendingAPIConsumer;

@@ -3,11 +3,11 @@ import com.mailgun.api.v3.MailgunMessagesApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.message.Message;
 import com.mailgun.model.message.MessageResponse;
-import de.htwberlin.emailService.core.model.OrderEmail;
-import de.htwberlin.emailService.core.model.Email;
+import de.htwberlin.emailService.core.domain.model.OrderEmail;
+import de.htwberlin.emailService.core.domain.model.Email;
 
-import de.htwberlin.emailService.core.service.exception.EmailAdressForOrderIdNotFoundException;
-import de.htwberlin.emailService.core.service.interfaces.IEmailService;
+import de.htwberlin.emailService.core.domain.service.exception.EmailAdressForOrderIdNotFoundException;
+import de.htwberlin.emailService.core.domain.service.interfaces.IEmailService;
 import de.htwberlin.emailService.port.dto.OrderDTO;
 import de.htwberlin.emailService.port.dto.PaymentEmailDTO;
 import org.springframework.beans.factory.annotation.Autowired;

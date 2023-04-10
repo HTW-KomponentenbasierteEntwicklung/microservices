@@ -1,13 +1,14 @@
 FROM openjdk:17-jdk-slim as build
 WORKDIR /workspace/app
 
-COPY mvnw .
+COPY mvnw mvnw.cmd ./
 COPY .mvn .mvn
 COPY pom.xml .
+COPY src src
 #COPY . .
 #
-#RUN sed -i 's/\r$//' mvnw
-#RUN /bin/sh mvnw dependency:resolve
+RUN sed -i 's/\r$//' mvnw
+RUN /bin/sh mvnw dependency:resolve
 RUN ./mvnw install -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 

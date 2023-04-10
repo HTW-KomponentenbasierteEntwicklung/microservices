@@ -1,7 +1,7 @@
-package de.htwberlin.emailService.core.service.interfaces;
+package de.htwberlin.emailService.core.domain.service.interfaces;
 
-import de.htwberlin.emailService.core.model.OrderEmail;
-import de.htwberlin.emailService.core.model.Email;
+import de.htwberlin.emailService.core.domain.model.OrderEmail;
+import de.htwberlin.emailService.core.domain.model.Email;
 
 import java.math.BigDecimal;
 import java.util.UUID;

@@ -21,7 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CartService implements ICartService {
 
-    private final ItemRepository itemRepository;
+    private final ItemRepository itemRepository;    //Todo: CartRepository notwendig?
 
     //private static final Logger log = LoggerFactory.getLogger(CartProducer.class);
 
@@ -39,7 +39,7 @@ public class CartService implements ICartService {
                 .orElseThrow(() -> new NoSuchElementException());
 
         if(toUpdateItem.getAmount() <= 0){
-            itemRepository.deleteById(toUpdateItem.getId());    // Todo: Warum direkt delete?
+            itemRepository.deleteById(toUpdateItem.getId());
         }else{
             toUpdateItem.setUsername(username);
             itemRepository.save(toUpdateItem);

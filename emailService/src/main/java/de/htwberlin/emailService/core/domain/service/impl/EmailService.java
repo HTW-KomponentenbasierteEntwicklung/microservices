@@ -1,10 +1,10 @@
-package de.htwberlin.emailService.core.service.impl;
+package de.htwberlin.emailService.core.domain.service.impl;
 
-import de.htwberlin.emailService.core.model.OrderEmail;
-import de.htwberlin.emailService.core.model.Email;
-import de.htwberlin.emailService.core.service.exception.EmailAdressForOrderIdNotFoundException;
-import de.htwberlin.emailService.core.service.interfaces.IOrderEmailRepository;
-import de.htwberlin.emailService.core.service.interfaces.IEmailService;
+import de.htwberlin.emailService.core.domain.model.OrderEmail;
+import de.htwberlin.emailService.core.domain.model.Email;
+import de.htwberlin.emailService.core.domain.service.exception.EmailAdressForOrderIdNotFoundException;
+import de.htwberlin.emailService.core.domain.service.interfaces.IOrderEmailRepository;
+import de.htwberlin.emailService.core.domain.service.interfaces.IEmailService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

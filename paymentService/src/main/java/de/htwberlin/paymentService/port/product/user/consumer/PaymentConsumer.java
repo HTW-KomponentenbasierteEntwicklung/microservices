@@ -29,10 +29,14 @@ public class PaymentConsumer {
         OrderDTO orderDTO = null;
         try {
             orderDTO = objectMapper.readValue(message, OrderDTO.class);
+            Payment payment = new Payment(orderDTO.getOrderId(), orderDTO.getUsername(), orderDTO.getTotalAmount(), PaymentStatus.PENDING, null);
+            paymentService.createPayment(payment);
         } catch (JsonProcessingException e) {
+            LOGGER.error("Error processing message: {}", message, e);
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("Error creating payment for message: {}", message, e);
             throw new RuntimeException(e);
         }
-        Payment payment = new Payment(orderDTO.getOrderId(), orderDTO.getUsername(), orderDTO.getTotalAmount(), PaymentStatus.PENDING, null);   //TODO: Warum immer der geliche status?
-        paymentService.createPayment(payment);
     }
 }
