@@ -6,7 +6,7 @@ services:
     image: mysql
     container_name: mysqlEmail
     ports:
-      - "3322:3306"
+      - "3321:3306"
     volumes:
       - ./:/app/
     environment:
@@ -29,7 +29,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8086:8080"
+      - "8085:8080"
     depends_on:
       database:
         condition: service_healthy
