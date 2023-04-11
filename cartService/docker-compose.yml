@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  database:
+    platform: linux/x86_64
+    image: mysql
+    container_name: mysqlCart
+    ports:
+      - "3320:3306"
+    volumes:
+      - ./:/app/
+    environment:
+      MYSQL_DATABASE: cart
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: user
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    networks:
+      - keycloak-net
+
+
+  app:
+    container_name: cartService
+    command: java -jar target/cartService-0.0.1-SNAPSHOT.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8086:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - ./:/app/app
+
+    networks:
+      - keycloak-net
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlCart:3306/cart?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - spring_rabbitmq_host=localhost
+      - spring_rabbitmq_port=5672
+
+networks:
+  keycloak-net:
+    name: keycloak-net

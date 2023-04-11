@@ -1,8 +1,11 @@
 package de.htwberlin.orderService.core.domain.services.impl;
 
+import de.htwberlin.orderService.OrderServiceApplication;
 import de.htwberlin.orderService.core.domain.model.*;
 import de.htwberlin.orderService.core.domain.services.exception.NotFoundByOrderIdException;
 import de.htwberlin.orderService.core.domain.services.interfaces.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,26 +14,24 @@ import java.util.List;
 import java.util.UUID;
 @Service
 public class OrderService implements IOrderService {
+
     @Autowired
     private final IOrderRegistryRepository orderRegistryRepository;
     @Autowired
     private final IOrderContactService orderContactService;
     @Autowired
-    private final ITotalAmountService totalAmountService;
-    @Autowired
     private final IItemService itemService;
 
-    public OrderService(IOrderContactRepository orderRepository, IItemRepository itemRepository, IOrderRegistryRepository orderNummerRepository, IOrderContactService orderContactService, ITotalAmountService totalAmountService, IItemService itemService) {
+    public OrderService(IOrderContactRepository orderRepository, IItemRepository itemRepository, IOrderRegistryRepository orderNummerRepository, IOrderContactService orderContactService, IItemService itemService) {
         this.orderRegistryRepository = orderNummerRepository;
         this.orderContactService = orderContactService;
-        this.totalAmountService = totalAmountService;
         this.itemService = itemService;
     }
 
 
     @Override
     public Order createOrder(Order order, String username, Date date) {
-        OrderRegistry orderRegistry = orderRegistryRepository.save(new OrderRegistry(username, date));
+        OrderRegistry orderRegistry = orderRegistryRepository.save(new OrderRegistry(username, date, order.getTotalAmount()));
         UUID orderId = orderRegistry.getOrderId();
         OrderContact orderContact = order.getOrderContact();
         orderContact.setOrderId(orderId);
@@ -40,15 +41,11 @@ public class OrderService implements IOrderService {
             items.get(i).setOrderID(orderId);
         }
 
-        TotalAmount totalAmount = order.getTotalAmount();
-        totalAmount.setOrderId(orderId);
-
         orderRegistryRepository.save(orderRegistry);
         orderContactService.createOrderContact(orderContact);
-        totalAmountService.createTotalAmount(totalAmount);
         itemService.addItemToOrder(items);
 
-        Order returnOrder = new Order(orderContact,items,totalAmount,orderRegistry);
+        Order returnOrder = new Order(orderContact,items,orderRegistry, order.getTotalAmount());
         return returnOrder;
 
     }
@@ -62,9 +59,8 @@ public class OrderService implements IOrderService {
     public Order getOrderByOrderId(UUID orderId) throws NotFoundByOrderIdException {
         OrderContact contact = orderContactService.getOrderContactByOrderId(orderId);
         List<Item> items = itemService.getItemsForOrderId(orderId);
-        TotalAmount totalAmount = totalAmountService.getTotalAmountbyOrderId(orderId);
         OrderRegistry orderRegistry = orderRegistryRepository.getByOrderId(orderId);
-        return new Order(contact,items,totalAmount, orderRegistry);
+        return new Order(contact,items, orderRegistry, orderRegistry.getTotalAmount());
 
     }
 }

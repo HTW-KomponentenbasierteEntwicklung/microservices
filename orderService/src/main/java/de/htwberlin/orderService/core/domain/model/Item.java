@@ -16,23 +16,21 @@ public class Item implements Serializable
     @Setter
     private UUID orderID;
     @Getter
-    private UUID productID;
+    private UUID productId;
     @Getter
-    private String productName;
+    private String productname;
+
     @Getter
-    private int amount;
-    @Getter
-    private BigDecimal total;
+    private BigDecimal price;
 
     public Item() {
     }
 
-    public Item(UUID id, UUID productID, String productName, int amount, BigDecimal total) {
+    public Item(UUID id, UUID productID, String productName, BigDecimal price) {
         this.id = id;
-        this.productID = productID;
-        this.productName = productName;
-        this.amount = amount;
-        this.total = total;
+        this.productId = productID;
+        this.productname = productName;
+        this.price = price;
     }
 
 }

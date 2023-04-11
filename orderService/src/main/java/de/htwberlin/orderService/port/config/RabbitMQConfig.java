@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("payment")
+    @Value("orderToPayment")
     private String paymentQueue;
     @Value("self")
     private String selfQueue;
-    @Value("emailOrderConfirmation")
+    @Value("orderToEmail")
     private String emailQueue;
-    @Value("cart")
+    @Value("orderToCart")
     private String cartQueue;
 
     @Value("order_exchange")

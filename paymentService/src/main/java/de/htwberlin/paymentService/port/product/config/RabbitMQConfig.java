@@ -10,6 +10,8 @@ public class RabbitMQConfig {
 
     @Value("paymentToEmail")
     private String paymentToEmailQueue;
+    @Value("orderToPayment")
+    private String orderToPaymentQueue;
 
     @Value("payment_exchange")
     private String exchange;

@@ -2,49 +2,70 @@ package de.htwberlin.paymentService.core.domain.service.impl;
 
 import de.htwberlin.paymentService.core.domain.model.Payment;
 import de.htwberlin.paymentService.core.domain.model.PaymentStatus;
-import de.htwberlin.paymentService.core.domain.service.exception.PaymentWithOrderIdNotFoundException;
+import de.htwberlin.paymentService.port.product.user.exception.NoPaymentsWithOrderIdFoundException;
+import de.htwberlin.paymentService.port.product.user.exception.PaymentWithOrderIdAlreadyExistsException;
+import de.htwberlin.paymentService.port.product.user.exception.PaymentIdNotFoundException;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentRepository;
 import de.htwberlin.paymentService.core.domain.service.interfaces.IPaymentService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class PaymentService implements IPaymentService {
 
     private final IPaymentRepository paymentRepository;
 
-    public PaymentService(IPaymentRepository paymentRepository) {
-        this.paymentRepository = paymentRepository;
-    }
-
     @Override
-    public Payment createPayment(Payment payment) {
+    public Payment createPayment(Payment payment) throws PaymentWithOrderIdAlreadyExistsException {
+        PaymentValidator.validate(payment);
+        if (!paymentRepository.findByOrderId(payment.getOrderId()).isEmpty())
+            throw new PaymentWithOrderIdAlreadyExistsException(payment.getOrderId());
+
         return paymentRepository.save(payment);
     }
 
     @Override
-    public Payment updatePaymentStatus(UUID orderId, PaymentStatus status) throws PaymentWithOrderIdNotFoundException {
-        List<Payment> existingPayment = paymentRepository.findByOrderNr(orderId);
-        if (existingPayment.size() == 0){
-            throw new PaymentWithOrderIdNotFoundException();
+    public Payment updatePayment(Payment payment) throws PaymentIdNotFoundException{
+        if (paymentRepository.existsById(payment.getPaymentId())) {
+            return paymentRepository.save(payment);
+        } else {
+            throw new PaymentIdNotFoundException(payment.getPaymentId());
         }
-        existingPayment.get(0).setStatus(status);
-        return paymentRepository.save(existingPayment.get(0));
     }
 
     @Override
-    public Payment getPaymentByOrderId(UUID orderId) throws PaymentWithOrderIdNotFoundException {
-        List<Payment> paymentByOrderId = paymentRepository.findByOrderNr(orderId);
-        if (paymentByOrderId.size() == 0){
-            throw new PaymentWithOrderIdNotFoundException();
-        }else{
-            return paymentByOrderId.get(0);
-        }
-
+    public void deletePayment(UUID paymentId) throws PaymentIdNotFoundException {
+        paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new PaymentIdNotFoundException(paymentId));
+        paymentRepository.deleteById(paymentId);
     }
 
+    @Override
+    public Payment updatePaymentStatus(UUID paymentId, PaymentStatus newPaymentStatus) throws PaymentIdNotFoundException {
+        if (newPaymentStatus == null)
+            throw new IllegalArgumentException("Payment status is missing or invalid");
+        if (paymentId == null)
+            throw new IllegalArgumentException("Payment ID is missing or invalid");
 
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new PaymentIdNotFoundException(paymentId));
+        payment.setStatus(newPaymentStatus);
+        return paymentRepository.save(payment);
+    }
 
+    @Override
+    public List<Payment> getPaymentsByOrderId(UUID orderId) {
 
+        if (orderId == null)
+            throw new IllegalArgumentException("Order ID is invalid.");
+
+        List<Payment> payments = paymentRepository.findByOrderId(orderId);
+
+        if (payments.isEmpty())
+            throw new NoPaymentsWithOrderIdFoundException(orderId);
+        return payments;
+    }
 }

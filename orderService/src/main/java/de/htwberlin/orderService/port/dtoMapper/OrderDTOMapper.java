@@ -11,7 +11,7 @@ public class OrderDTOMapper {
         orderDTO.setOrderNr(order.getOrderRegistry().getOrderId());
         orderDTO.setEmail(order.getOrderContact().getEmail());
         orderDTO.setUsername(order.getOrderRegistry().getUsername());
-        orderDTO.setTotalAmount(order.getTotalAmount().getTotalAmount());
+        orderDTO.setTotalAmount(order.getTotalAmount());
         return orderDTO;
     }
 }

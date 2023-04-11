@@ -2,13 +2,15 @@ package de.htwberlin.cartService.core.domain.services.interfaces;
 
 import de.htwberlin.cartService.core.domain.model.Cart;
 import de.htwberlin.cartService.core.domain.model.Item;
+import de.htwberlin.cartService.core.domain.services.exception.ItemNotFoundException;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 public interface ICartService {
-    public void  updateProductDataForItems(UUID productId, String productname, String imagelink, BigDecimal price);
-    public Cart changeAmount(Item newItem);
     public Cart getCartForUsername(String username);
-    public Cart addItemToCart(Item item);
+    public Item getItemById(UUID id);
+    public Cart addItemToCart(Item item, String username);
+    public void removeAllItem(String username);
+
+    Cart deleteItemFromCart(UUID id) throws ItemNotFoundException;
 }

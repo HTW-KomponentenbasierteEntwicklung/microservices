@@ -2,24 +2,24 @@ package de.htwberlin.productService.core.domain.service.interfaces;
 
 import de.htwberlin.productService.core.domain.model.Category;
 import de.htwberlin.productService.core.domain.model.Product;
-import de.htwberlin.productService.core.domain.service.exception.ProductIDNotFoundException;
+import de.htwberlin.productService.port.product.user.exception.*;
 
 import java.util.List;
 import java.util.UUID;
+
 public interface IProductService {
 
-    Product createProduct(Product product);
+    Product createProduct(Product product) throws ProductIdAlreadyExistsException;
 
-    Product updateProduct(UUID id, Product product) throws ProductIDNotFoundException;
+    Product getProductById(UUID id) throws ProductIdNotFoundException;
 
-    void deleteProduct(UUID id) ;
+    void deleteProduct(UUID id) throws ProductIdNotFoundException;
 
-    Product getProductById(UUID id);
+    List<Product> getAllProducts() throws ProductsNotFoundException;
 
-    Iterable<Product> getAllProducts();
+    List<Product> findProductsByName(String name)  throws ProductsNotFoundException;
 
-    List<Product> findProductsByName(String name);
-
-    List<Product> findProductsByCategory(Category category);
+    List<Product> findProductsByCategory(Category category)  throws ProductsNotFoundException;
+    Product updateProductAmount(UUID productId, int difference) throws ProductIdNotFoundException;
 
 }

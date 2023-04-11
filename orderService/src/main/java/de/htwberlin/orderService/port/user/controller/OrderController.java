@@ -1,6 +1,7 @@
 package de.htwberlin.orderService.port.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import de.htwberlin.orderService.OrderServiceApplication;
 import de.htwberlin.orderService.core.domain.model.Order;
 import de.htwberlin.orderService.core.domain.model.OrderRegistry;
 import de.htwberlin.orderService.core.domain.services.exception.NotFoundByOrderIdException;
@@ -9,6 +10,8 @@ import de.htwberlin.orderService.port.dto.OrderDTO;
 import de.htwberlin.orderService.port.dtoMapper.OrderDTOMapper;
 import de.htwberlin.orderService.port.rabbitProducer.OrderProducer;
 import de.htwberlin.orderService.port.user.exception.OrderNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,8 @@ import java.util.UUID;
 
 @RestController
 public class OrderController {
+    private static final Logger log = LoggerFactory.getLogger(OrderServiceApplication.class);
+
     @Autowired
     private IOrderService orderService;
     @Autowired
@@ -29,12 +34,10 @@ public class OrderController {
 
     @PostMapping(path = "/order")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody UUID createOrder(@RequestBody Order order, @RequestHeader (HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-        String username = getusernameFromRequestHeader(authorizationHeader);
-
+    public @ResponseBody Order createOrder(@RequestBody Order order, @RequestParam String username) {
         Order createdOrder = orderService.createOrder(order,username, new Date());
         orderProducer.sendToAll(createdOrder);
-        return order.getOrderId();
+        return createdOrder;
     }
 
     @GetMapping("/id/{id}")

@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("cart_product")
+    @Value("cartToProduct")
     private String productQueue;
 
     @Value("cart_exchange")
     private String exchange;
 
-    @Value("product_routing_key")
+    @Value("cart_ToProduct")
     private String routingKey;
 
     @Bean

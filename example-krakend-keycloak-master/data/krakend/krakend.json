@@ -16,7 +16,8 @@
                 "OPTIONS",
                 "GET",
                 "HEAD",
-                "POST"
+                "POST",
+                "DELETE"
             ],
             "expose_headers": [
                 "Content-Length",
@@ -29,6 +30,7 @@
             "allow_credentials": false,
             "debug": true
         }
+
 
     },
     "timeout": "10000ms",
@@ -57,7 +59,7 @@
                     "sd": "static",
                     "extra_config": {},
                     "host": [
-                        "http://finalWebshop:8080"
+                        "http://productService:8080"
                     ],
                     "is_collection": true,
                     "mapping": {
@@ -77,13 +79,155 @@
             "url_pattern": "/product/{id}",
             "encoding": "json",
             "sd": "static",
-            "extra_config": {},
+            "extra_config": {
+            },
+
             "host": [
-                "http://finalWebshop:8080"
+                "http://productService:8080"
             ]
 
         }
     ]
+        },
+        {
+            "endpoint": "/cart",
+            "method": "GET",
+            "output_encoding": "json",
+            "concurrent_calls": 1,
+            "input_query_strings": [
+                "username"
+            ],
+            "backend": [
+                {
+                    "url_pattern": "/cart",
+                    "encoding": "json",
+                    "sd": "static",
+                    "extra_config": {
+                        "auth/validator": {
+                            "alg": "RS256",
+                            "jwk_url": "http://keycloak:8080/auth/realms/testRealm/protocol/openid-connect/certs",
+                            "operation_debug": true,
+                            "disable_jwk_security": true
+                        }
+                    },
+                    "host": [
+                        "http://cartService:8080"
+                    ]
+
+                }
+            ]
+        },
+        {
+            "endpoint": "/cart/{idItem}",
+            "method": "DELETE",
+
+            "output_encoding": "json",
+            "concurrent_calls": 1,
+            "input_query_strings": [
+                "id"
+            ],
+            "backend": [
+                {
+                    "url_pattern": "/cart/{idItem}",
+                    "encoding": "json",
+                    "sd": "static",
+                    "extra_config": {},
+                    "host": [
+                        "http://cartService:8080"
+                    ]
+
+                }
+            ]
+        },
+        {
+            "endpoint": "/cart",
+            "method": "POST",
+
+            "output_encoding": "json",
+            "concurrent_calls": 1,
+            "input_query_strings": [
+                "username"
+            ],
+            "backend": [
+                {
+                    "url_pattern": "/cart",
+                    "encoding": "json",
+                    "sd": "static",
+                    "extra_config": {},
+                    "host": [
+                        "http://cartService:8080"
+                    ]
+
+                }
+            ]
+        },
+        {
+            "endpoint": "/order",
+            "method": "POST",
+
+            "output_encoding": "json",
+            "concurrent_calls": 1,
+            "input_query_strings": [
+                "username"
+            ],
+            "backend": [
+                {
+                    "url_pattern": "/order",
+                    "encoding": "json",
+                    "sd": "static",
+                    "extra_config": {},
+                    "host": [
+                        "http://orderService:8080"
+                    ]
+
+                }
+            ]
+        },
+        {
+            "endpoint": "/order/username/{username}",
+            "method": "GET",
+
+            "output_encoding": "json",
+            "concurrent_calls": 1,
+            "input_query_strings": [
+                "username"
+            ],
+            "backend": [
+                {
+                    "url_pattern": "/username/{username}",
+                    "encoding": "json",
+                    "sd": "static",
+                    "extra_config": {},
+                    "host": [
+                        "http://orderService:8080"
+                    ]
+
+                }
+            ]
+        },
+        {
+            "endpoint": "/payment",
+            "method": "POST",
+
+            "output_encoding": "json",
+            "concurrent_calls": 1,
+            "input_query_strings": [
+                "username"
+            ],
+            "backend": [
+                {
+                    "url_pattern": "/payment",
+                    "encoding": "json",
+                    "sd": "static",
+                    "extra_config": {},
+                    "host": [
+                        "http://paymentService:8080"
+                    ]
+
+                }
+            ]
         }
+
     ]
 }
+

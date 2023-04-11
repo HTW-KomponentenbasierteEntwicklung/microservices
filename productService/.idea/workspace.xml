@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b71582-3161-4097-9047-2ac644a1ecd6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../paymentService/paymentService.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/CartServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/CartServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/EmailServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/EmailServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/productService.iml" beforeDir="false" afterPath="$PROJECT_DIR$/productService.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="e1b71582-3161-4097-9047-2ac644a1ecd6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,15 +36,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDKs" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/home/mylinh/Downloads/microservices-main/orderService"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="de.htwberlin.productService.core.domain.service.exception" />
@@ -110,7 +101,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

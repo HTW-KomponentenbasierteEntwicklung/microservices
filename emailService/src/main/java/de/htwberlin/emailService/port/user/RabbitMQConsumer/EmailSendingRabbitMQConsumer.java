@@ -29,7 +29,7 @@ public class EmailSendingRabbitMQConsumer {
         }
         emailAPIConsumer.sendPaymentConfirmationEmail(paymentEmailDTO);
     }
-    @RabbitListener(queues = {"order.ToEmail"})
+    @RabbitListener(queues = {"orderToEmail"})
     public void consumeOrderReceived(String order){
         OrderDTO orderDTO = null;
         try {

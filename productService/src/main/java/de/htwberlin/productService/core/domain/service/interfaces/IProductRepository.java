@@ -12,5 +12,4 @@ import java.util.UUID;
 public interface IProductRepository extends JpaRepository<Product, UUID> {
     List<Product> findByName(String name);
     List<Product> findByCategory(Category category);
-
 }

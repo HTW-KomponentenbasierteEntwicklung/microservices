@@ -1,8 +1,11 @@
 package de.htwberlin.orderService.core.domain.services.impl;
 
+import de.htwberlin.orderService.OrderServiceApplication;
 import de.htwberlin.orderService.core.domain.model.Item;
 import de.htwberlin.orderService.core.domain.services.interfaces.IItemRepository;
 import de.htwberlin.orderService.core.domain.services.interfaces.IItemService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 @Service
 public class ItemService implements IItemService {
+
     private final IItemRepository itemRepository;
 
     public ItemService(IItemRepository itemRepository) {
@@ -20,8 +24,10 @@ public class ItemService implements IItemService {
     public List<Item> addItemToOrder(List<Item> items) {
         List<Item> returnItems = new ArrayList<>();
         for(int i=0; i<items.size(); i++){
-            returnItems.add(itemRepository.save(items.get(i)));
+            Item savedItem = itemRepository.save(items.get(i));
+            returnItems.add(savedItem);
         }
+
         return returnItems;
     }
 

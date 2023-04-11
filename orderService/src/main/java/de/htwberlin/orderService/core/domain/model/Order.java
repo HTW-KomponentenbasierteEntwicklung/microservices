@@ -18,15 +18,14 @@ public class Order {
     @Getter
     private List<Item> items;
     @Getter
-    private TotalAmount totalAmount;
-    @Getter
     private OrderRegistry orderRegistry;
+    @Getter
+    private BigDecimal totalAmount;
 
-    public Order(OrderContact orderContact, List<Item> items, TotalAmount totalAmount, OrderRegistry orderRegistry) {
+    public Order(OrderContact orderContact, List<Item> items, OrderRegistry orderRegistry, BigDecimal totalAmount) {
         this.orderId = orderContact.getOrderId();
         this.orderContact = orderContact;
         this.items = items;
-        this.totalAmount = totalAmount;
         this.orderRegistry=orderRegistry;
     }
 

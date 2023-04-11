@@ -41,8 +41,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      rabbitmq-container:
-        condition: service_started
+
     volumes:
       - ./:/app/app
 

@@ -36,6 +36,6 @@ public class OrderProducer {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        rabbitTemplate.convertAndSend(exchange, "order.*", message);
+        rabbitTemplate.convertAndSend(exchange, "*", message);
     }
 }

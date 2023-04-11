@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -21,12 +22,15 @@ public class OrderRegistry {
     private String username;
     @Getter
     private Date date;
+    @Getter
+    private BigDecimal totalAmount;
     public OrderRegistry() {
     }
 
-    public OrderRegistry(String username, Date date) {
+    public OrderRegistry(String username, Date date, BigDecimal totalAmount) {
         this.username = username;
         this.date = date;
+        this.totalAmount = totalAmount;
     }
 
 }
