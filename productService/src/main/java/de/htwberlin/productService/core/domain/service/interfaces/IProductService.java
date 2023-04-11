@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface IProductService {
 
-    Product createProduct(Product product) throws ProductIdAlreadyExistsException;
+    Product createProduct(Product product);
 
     Product getProductById(UUID id) throws ProductIdNotFoundException;
 

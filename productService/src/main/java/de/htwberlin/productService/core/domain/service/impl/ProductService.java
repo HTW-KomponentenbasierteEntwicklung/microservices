@@ -17,7 +17,7 @@ public class ProductService implements IProductService {
     private final IProductRepository productRepository;
 
     @Override
-    public Product createProduct(Product product) throws ProductIdAlreadyExistsException {
+    public Product createProduct(Product product) {
         ProductValidator.validate(product);
         return productRepository.save(product);
     }

@@ -37,7 +37,7 @@ public class EmailSendingRabbitMQConsumer {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        OrderEmail emailAdress = emailService.createOrderEmail(orderDTO.getUsername(),orderDTO.getEmail(), orderDTO.getOrderId());
+        OrderEmail emailAddress = emailService.createOrderEmail(orderDTO.getUsername(),orderDTO.getEmail(), orderDTO.getOrderId());
         emailAPIConsumer.sendOrderConfirmationEmail(orderDTO);
 
     }

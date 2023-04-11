@@ -123,6 +123,7 @@ public class CartConsumerTest {
         cartConsumer.consume(message);
 
         cart = cartService.getCartForUsername(username);
-        assertTrue(cart.getItems() == null);
+        System.out.println(cart.getItems().toString());
+        assertTrue(cart.getItems().isEmpty());  //Todo
     }
 }

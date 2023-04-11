@@ -127,7 +127,7 @@ public class CartServiceTest {
     }
 
     @Test
-    void addItemToCartNewTest() {
+    void addItemToCartNewTest() {   //Todo
         String username = "testUser";
         Item newItem = new Item();
         newItem.setProductname("Product 1");
@@ -136,12 +136,30 @@ public class CartServiceTest {
 
         when(itemRepository.findByUsername(username)).thenReturn(new ArrayList<>());
 
+        Cart newCart = cartService.addItemToCart(newItem, username);
+        verify(itemRepository).save(newItem);
+        assertEquals(newItem, itemRepository.findByUsername(username).get(0));
+    }
+
+    @Test
+    void addItemToCartNewTestv2() {
+        String username = "testUser";
+        Item newItem = new Item();
+        newItem.setProductname("Product 1");
+        newItem.setAmount(1);
+        newItem.setProductPrice(BigDecimal.valueOf(10.0));
+
+        Cart cart = new Cart(new ArrayList<>(), BigDecimal.valueOf(0.0));
+        List<Item> items = new ArrayList<>();
+        items.add(newItem);
+        Mockito.when(itemRepository.findByUsername(username)).thenReturn(items);
+
         cartService.addItemToCart(newItem, username);
 
-        ArgumentCaptor<Item> itemCaptor = ArgumentCaptor.forClass(Item.class);
-        verify(itemRepository).save(itemCaptor.capture());
-        Item savedItem = itemCaptor.getValue();
-        assertEquals(newItem, savedItem);
+        ArgumentCaptor<Item> cartCaptor = ArgumentCaptor.forClass(Item.class);
+        verify(itemRepository).save(cartCaptor.capture());
+        Item savedCart = cartCaptor.getValue();
+        assertTrue(savedCart.getId().equals(newItem.getId()));
     }
 
     @Test

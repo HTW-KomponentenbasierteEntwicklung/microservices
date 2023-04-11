@@ -5,28 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1b71582-3161-4097-9047-2ac644a1ecd6" name="Changes" comment="">
-<<<<<<< HEAD
-      <change afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/dto/OrderDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/dto/ProductDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/dtomapper/ItemToProductDTOMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cartService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/core/domain/services/impl/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/core/domain/services/impl/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/core/domain/services/interfaces/ICartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/core/domain/services/interfaces/ICartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/config/RabbitMQConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/consumer/CartConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/consumer/CartConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/producer/CartProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/producer/CartProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/user/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/main/java/de/htwberlin/cartService/port/user/controller/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../orderService/src/main/java/de/htwberlin/orderService/port/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../orderService/src/main/java/de/htwberlin/orderService/port/config/RabbitMQConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/port/product/user/consumer/ProductConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/port/product/user/consumer/ProductConsumer.java" afterDir="false" />
-=======
-      <change afterPath="$PROJECT_DIR$/../paymentService/paymentService.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/CartServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/CartServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/service/exception/EmailAddressForOrderIdNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/de/htwberlin/productService/unitTests/port/product/user/consumer/ProductConsumerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/unitTests/core/domain/services/impl/CartServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/unitTests/core/domain/services/impl/CartServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/unitTests/port/consumer/CartConsumerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cartService/src/test/java/de/htwberlin/cartService/unitTests/port/consumer/CartConsumerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/EmailServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/EmailServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/model/Email.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/model/Email.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/model/OrderEmail.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/model/OrderEmail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/service/exception/EmailAdressForOrderIdNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/service/impl/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/service/impl/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/service/interfaces/IOrderEmailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/core/domain/service/interfaces/IOrderEmailRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/port/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/port/config/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/port/user/RabbitMQConsumer/EmailSendingRabbitMQConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/port/user/RabbitMQConsumer/EmailSendingRabbitMQConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/port/user/apiConsumer/EmailSendingAPIConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/main/java/de/htwberlin/emailService/port/user/apiConsumer/EmailSendingAPIConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailService/src/test/java/de/htwberlin/emailService/EmailServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../emailService/src/test/java/de/htwberlin/emailService/EmailServiceApplicationTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/productService.iml" beforeDir="false" afterPath="$PROJECT_DIR$/productService.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
->>>>>>> bd0e76721ad5470325aa4a69094605911557ce48
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/core/domain/service/impl/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/core/domain/service/impl/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/core/domain/service/interfaces/IProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/core/domain/service/interfaces/IProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/port/product/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/htwberlin/productService/port/product/config/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/de/htwberlin/productService/unitTests/ProductModuleDataLayerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/de/htwberlin/productService/unitTests/ProductModuleTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/de/htwberlin/productService/unitTests/ProductServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/de/htwberlin/productService/unitTests/core/domain/service/impl/ProductServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/de/htwberlin/productService/unitTests/ProductTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/de/htwberlin/productService/unitTests/core/domain/model/ProductTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/htwberlin/productService/port/product/config/RabbitMQConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/htwberlin/productService/port/product/config/RabbitMQConfig.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,29 +63,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/mylinh/Schreibtisch/microservices/productService&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.haulmont.jpb.entityDeclaration&quot;
-  }
-}</component>
-=======
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDKs" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
-  </component>
->>>>>>> bd0e76721ad5470325aa4a69094605911557ce48
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="de.htwberlin.productService.core.domain.service.exception" />
@@ -91,7 +72,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.ProductServiceTests">
     <configuration name="productServiceApp" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -101,6 +82,30 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProductServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="productService" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.htwberlin.productService.unitTests.core.domain.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="de.htwberlin.productService.unitTests.core.domain.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="de.htwberlin.productService.unitTests.core.domain.service.impl.ProductServiceTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.productServiceApp" />
+      <item itemvalue="JUnit.ProductServiceTests" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ProductServiceTests" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

@@ -3,18 +3,17 @@ package de.htwberlin.emailService.core.domain.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
+@NoArgsConstructor
 public class OrderEmail {
-    public OrderEmail() {
-    }
 
-
-    public OrderEmail(UUID orderId, String emailAdress, String username) {
+    public OrderEmail(UUID orderId, String emailAddress, String username) {
         this.orderId = orderId;
-        this.emailAdress = emailAdress;
+        this.emailAddress = emailAddress;
         this.username = username;
     }
 
@@ -27,7 +26,7 @@ public class OrderEmail {
     private UUID orderId;
     @Getter
     @NotNull
-    private String emailAdress;
+    private String emailAddress;
     @Getter
     @NotNull
     private String username;

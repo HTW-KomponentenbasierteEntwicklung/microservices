@@ -6,7 +6,7 @@ import com.mailgun.model.message.MessageResponse;
 import de.htwberlin.emailService.core.domain.model.OrderEmail;
 import de.htwberlin.emailService.core.domain.model.Email;
 
-import de.htwberlin.emailService.core.domain.service.exception.EmailAdressForOrderIdNotFoundException;
+import de.htwberlin.emailService.core.domain.service.exception.EmailAddressForOrderIdNotFoundException;
 import de.htwberlin.emailService.core.domain.service.interfaces.IEmailService;
 import de.htwberlin.emailService.port.dto.OrderDTO;
 import de.htwberlin.emailService.port.dto.PaymentEmailDTO;
@@ -33,7 +33,7 @@ public class EmailSendingAPIConsumer {
         OrderEmail orderEmail;
         try{
             orderEmail = emailService.getOrderEmailByOrderId(order.getOrderId());
-        }catch (EmailAdressForOrderIdNotFoundException e){
+        }catch (EmailAddressForOrderIdNotFoundException e){
             throw new RuntimeException(e);
         }
         Email email = emailService.generateOrderConfirmEmail(order.getTotalAmount(), orderEmail);
