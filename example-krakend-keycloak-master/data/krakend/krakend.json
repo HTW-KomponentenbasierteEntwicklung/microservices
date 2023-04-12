@@ -187,11 +187,16 @@
             "endpoint": "/order/username/{username}",
             "method": "GET",
 
+            "extra_config": {
+                "auth/validator": {
+                    "alg": "RS256",
+                    "jwk_url": "http://keycloak:8080/auth/realms/testRealm/protocol/openid-connect/certs",
+                    "operation_debug": true,
+                    "disable_jwk_security": true
+                }
+            },
             "output_encoding": "json",
             "concurrent_calls": 1,
-            "input_query_strings": [
-                "username"
-            ],
             "backend": [
                 {
                     "url_pattern": "/username/{username}",
@@ -200,8 +205,11 @@
                     "extra_config": {},
                     "host": [
                         "http://orderService:8080"
-                    ]
-
+                    ],
+                    "is_collection": true,
+                    "mapping": {
+                        "collection": "orders"
+                    }
                 }
             ]
         },

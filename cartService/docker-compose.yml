@@ -40,7 +40,7 @@ services:
       - keycloak-net
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlCart:3306/cart?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      - spring_rabbitmq_host=localhost
+      - spring_rabbitmq_host=rabbitmq-container
       - spring_rabbitmq_port=5672
 
 networks:

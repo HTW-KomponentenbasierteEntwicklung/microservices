@@ -13,6 +13,9 @@ public class RabbitMQConfig {
 
     @Value("cartToProduct")
     private String productQueue;
+    
+    @Value("orderToCart")
+    private String orderToCartQueue;
 
     @Value("cart_exchange")
     private String exchange;
@@ -24,6 +27,11 @@ public class RabbitMQConfig {
     public Queue queue(){
         return new Queue(productQueue);
     }
+    @Bean
+    public Queue orderToCartQueue(){
+        return new Queue(orderToCartQueue);
+    }
+
 
     @Bean
     public TopicExchange exchange(){
