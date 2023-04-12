@@ -41,7 +41,7 @@ public class CartController {
 
     @DeleteMapping("/cart/{idItem}")
     @ResponseStatus(HttpStatus.OK)
-    public Cart deleteItemFromCart(@PathVariable UUID idItem) throws ItemNotFoundException {
+    public Cart deleteItemFromCart(@PathVariable("idItem") UUID idItem) throws ItemNotFoundException {
         Item item = cartService.getItemById(idItem);
         cartProducer.changeAmountOfProducts(item, 1);
         Cart returnCart = cartService.deleteItemFromCart(idItem);

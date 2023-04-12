@@ -29,7 +29,7 @@ public class ProductController {
 
     @GetMapping("/product/{productId}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Product getProductById(@PathVariable UUID productId)  throws ProductIdNotFoundException {
+    public @ResponseBody Product getProductById(@PathVariable("productId") UUID productId)  throws ProductIdNotFoundException {
         return productService.getProductById(productId);
     }
 
@@ -46,19 +46,19 @@ public class ProductController {
 
     @GetMapping("/product/name/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<Product> findProductsByName(@PathVariable String name) throws ProductsNotFoundException {
+    public @ResponseBody List<Product> findProductsByName(@PathVariable("name") String name) throws ProductsNotFoundException {
         return productService.findProductsByName(name);
     }
 
     @GetMapping("/category/{category}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<Product> findProductsByCategory(@PathVariable Category category) throws ProductNotFoundException {
+    public @ResponseBody List<Product> findProductsByCategory(@PathVariable("category") Category category) throws ProductNotFoundException {
         return productService.findProductsByCategory(category);
     }
 
     @GetMapping("/products/{productId}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Product updateProductAmount(@PathVariable UUID productId, int difference) throws ProductIdNotFoundException {
+    public @ResponseBody Product updateProductAmount(@PathVariable("productId") UUID productId, int difference) throws ProductIdNotFoundException {
         return productService.updateProductAmount(productId, difference);
     }
 }

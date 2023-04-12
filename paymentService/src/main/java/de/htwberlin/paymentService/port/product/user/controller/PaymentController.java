@@ -29,7 +29,7 @@ public class PaymentController {
 
     @GetMapping("/payment/{orderID}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<Payment> getPaymentsByOrderId(@PathVariable UUID orderId) throws NoPaymentsWithOrderIdFoundException {
+    public @ResponseBody List<Payment> getPaymentsByOrderId(@PathVariable("orderID") UUID orderId) throws NoPaymentsWithOrderIdFoundException {
         return paymentService.getPaymentsByOrderId(orderId);
     }
 

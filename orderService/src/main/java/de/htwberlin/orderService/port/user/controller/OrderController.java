@@ -42,7 +42,7 @@ public class OrderController {
 
     @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Order getOrderById(@PathVariable UUID id) throws OrderNotFoundException {
+    public Order getOrderById(@PathVariable("id") UUID id) throws OrderNotFoundException {
         Order order = null;
         try {
             order = orderService.getOrderByOrderId(id);
@@ -53,7 +53,7 @@ public class OrderController {
     }
     @GetMapping("/username/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody List<OrderRegistry> findByUsername(@PathVariable String username) {
+    public @ResponseBody List<OrderRegistry> findByUsername(@PathVariable("username") String username) {
         return orderService.getOrderRegistryByUsername(username);
     }
     public String getusernameFromRequestHeader(String authorizationHeader){
